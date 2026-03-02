@@ -11,7 +11,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">Cocoglamworld</div>
+            <a href="index.html" class="logo"><img src="images/Cocoglamlogo.jpg" alt="Cocoglamworld Logo"></a>
             <button class="nav-toggle" id="navToggle">
                 <span></span>
                 <span></span>
@@ -21,7 +21,7 @@
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -55,22 +55,22 @@
             <h2>Why Choose Us</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">✨</div>
+                    <img src="images/Premiumbeautycosmetics.jpg" alt="Premium beauty products" loading="lazy" />
                     <h3>Premium Quality</h3>
                     <p>High-quality cosmetics crafted with the finest ingredients</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💅</div>
+                    <img src="images/Expertbeautycaresession.jpg" alt="Expert beauty care session" loading="lazy" />
                     <h3>Expert Care</h3>
                     <p>Professional spa treatments delivered by experienced therapists</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌿</div>
+                    <img src="images/Naturalskincareingredients.jpg" alt="Natural skincare ingredients" loading="lazy" />
                     <h3>Natural Ingredients</h3>
                     <p>Skincare solutions with natural and safe ingredients</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💝</div>
+                    <img src="images/Happycustomerconsultation.jpg" alt="Happy customer consultation" loading="lazy" />
                     <h3>Customer Care</h3>
                     <p>Personalized service and support for every customer</p>
                 </div>
@@ -84,18 +84,22 @@
             <h2>Our Services</h2>
             <div class="services-grid">
                 <div class="service-card">
+                    <img src="images/facialtreatment.jpg" alt="Facial treatment session" loading="lazy" />
                     <h3>Facial Treatments</h3>
                     <p>Rejuvenating facials designed to cleanse, hydrate, and revitalize your skin</p>
                 </div>
                 <div class="service-card">
+                    <img src="images/spatherapy.jpg" alt="Spa therapy environment" loading="lazy" />
                     <h3>Spa Therapy</h3>
                     <p>Luxurious spa treatments to relax muscles and refresh your mind</p>
                 </div>
                 <div class="service-card">
+                    <img src="images/Happycustomerconsultation.jpg" alt="Beauty consultation session" loading="lazy" />
                     <h3>Beauty Consultation</h3>
                     <p>Expert advice on choosing the right products for your skin type</p>
                 </div>
                 <div class="service-card">
+                    <img src="images/Vibrantpink.jpg" alt="Makeup application service" loading="lazy" />
                     <h3>Makeup Application</h3>
                     <p>Professional makeup services for events and special occasions</p>
                 </div>
@@ -107,27 +111,8 @@
     <section class="products-preview">
         <div class="container">
             <h2>Featured Products</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-image">💄</div>
-                    <h3>Lip Gloss</h3>
-                    <p>Glossy, long-lasting lip color with hydrating formula</p>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">👄</div>
-                    <h3>Lip Balm</h3>
-                    <p>Nourishing balm for soft, smooth, moisturized lips</p>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">✨</div>
-                    <h3>Face Mask</h3>
-                    <p>Deep cleansing mask for radiant and healthy skin</p>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">🧴</div>
-                    <h3>Hand Cream</h3>
-                    <p>Rich moisturizer for soft and protected hands</p>
-                </div>
+            <div id="featuredContainer" class="products-grid">
+                <!-- featured items injected by JavaScript -->
             </div>
             <div class="text-center">
                 <a href="products.html" class="btn btn-secondary">View All Products</a>
@@ -183,7 +168,7 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="products.html">Products</a></li>
-                    <li><a href="#services">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -200,6 +185,7 @@
         </div>
     </footer>
 
+    <script src="products-data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

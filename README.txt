@@ -5,6 +5,20 @@ Cocoglamworld - Website Management Guide
 
 Open any `.html` file in a browser to view the website. Everything is mobile-responsive!
 
+**Using product images:**
+You can keep the emoji placeholders until you're ready to add real photos. To display an image, edit the product entry in `products-data.js` and set `imageUrl` to the relative path (e.g. `"images/lipgloss.jpg"`). If the field is empty, the emoji defined in `icon` will appear instead.
+
+**Formspree integration:**
+Forms (newsletter and order) are preconfigured with example Formspree endpoints. Replace `YOUR_FORM_ID` in the form `action` attributes with your actual Formspree ID to start receiving submissions via email.  
+
+To use Formspree:
+1. Sign up at https://formspree.io and create a new form.
+2. Copy the provided form ID (looks like `xqednlyq` or similar).
+3. Paste the ID into the `action` attribute of both forms in `index.html` and `products.html`.
+4. Optionally customize the success message via Formspree dashboard or add a redirect URL.
+
+Once configured, your newsletter subscriptions and order inquiries will arrive directly in your inbox without needing any backend code.
+
 ---
 
 ## HOW TO UPDATE THE WEBSITE
@@ -23,30 +37,36 @@ All products are stored in a single file: `products-data.js`
     id: 1,                              // Unique number
     name: "Lip Gloss",                  // Product name
     category: "lips",                   // lips, face, or body
-    icon: "💄",                         // Emoji icon
+    icon: "💄",                         // Emoji icon (used if imageUrl empty)
+    imageUrl: "",                      // optional path to product photo
+    price: 0,                            // numeric price (update before launching)
     description: "...",                 // Short description
     benefits: ["Benefit 1", "Benefit 2", "Benefit 3"]  // 3 benefits
 }
 ```
 
-**Categories Available:**
-- `lips` - Lip care products
-- `face` - Face care products  
-- `body` - Body care products
+**Categories & Current Layout:**
+- Only `lips` is used now – the site showcases a lip‑gloss-only collection.
 
-**Example - Adding a new product:**
+Each product in `products-data.js` will appear as a shade card on the products page. Be sure to include a `swatch` field (hex code or colour name) if you want a colour circle shown under the name.
+
+**Example – shade with swatch:**
 ```javascript
 {
-    id: 16,
-    name: "Lip Tint",
+    id: 6,
+    name: "Coral Kiss",
     category: "lips",
-    icon: "🎨",
-    description: "Lightweight tinted lip stain",
-    benefits: ["Long-lasting", "Lightweight", "Natural look"]
+    swatch: "#FF6F61",
+    imageUrl: "images/coral-kiss.jpg",
+    price: 1350,
+    description: "Vibrant coral shade with intense shine.",
+    benefits: ["Hydrating", "Long-lasting", "Cruelty-free"]
 }
 ```
 
-The products will automatically appear on the products page and can be filtered by category!
+The grid no longer includes category filters; all items are displayed together. Order forms have been removed from the public listing, but price logic still works if you decide to re-enable the form.
+
+* When customers request an order via Formspree, they can specify product and quantity. The `price` field is used client‑side to calculate totals, so keep it accurate.
 
 ---
 

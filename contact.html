@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Cocoglamworld</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="images/Cocoglamlogo.jpg" alt="Cocoglamworld Logo"></a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h2>Send us a Message</h2>
+                    <form action="https://formspree.io/f/xqednlyq" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPhone">Phone Number (Optional)</label>
+                            <input type="tel" id="contactPhone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subject</label>
+                            <select id="contactSubject" name="subject" required>
+                                <option value="">-- Select a subject --</option>
+                                <option value="Product Inquiry">Product Inquiry</option>
+                                <option value="Service Inquiry">Service Inquiry</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Partnership">Partnership Opportunity</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" name="message" rows="6" placeholder="Please tell us how we can help..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info-container">
+                    <h2>Contact Information</h2>
+                    <div class="contact-info">
+                        <div class="info-card">
+                            <h3>📞 Phone</h3>
+                            <p><a href="tel:+234">+234 XXX XXX XXXX</a></p>
+                        </div>
+                        <div class="info-card">
+                            <h3>📧 Email</h3>
+                            <p><a href="mailto:info@cocoglamworld.com">info@cocoglamworld.com</a></p>
+                        </div>
+                        <div class="info-card">
+                            <h3>📍 Address</h3>
+                            <p>Your Business Address<br>City, State, Country</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>🕐 Business Hours</h3>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 40px; color: var(--secondary-color);">Follow Us</h3>
+                    <div class="social-links" style="gap: 15px; font-size: 16px;">
+                        <a href="#">Facebook</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h3>How do I place an order?</h3>
+                    <p>Visit our <a href="products.html">Products page</a>, select your desired items, click "Buy Now," and fill out the order form. We'll confirm your order and process it promptly.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>What payment methods do you accept?</h3>
+                    <p>We accept various payment methods including bank transfers and online payments. Once you submit your order, we'll provide you with detailed payment instructions.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>How long does delivery take?</h3>
+                    <p>Delivery times vary depending on your location. We'll provide an estimated delivery date when confirming your order.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>Can I return or exchange products?</h3>
+                    <p>Yes, we offer returns and exchanges within 14 days of purchase for unused items in original packaging. Contact us for more details.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>Do you offer custom orders?</h3>
+                    <p>Yes! We offer customization for bulk orders and special requests. Contact us directly to discuss your requirements.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>How can I book a spa service?</h3>
+                    <p>Contact us via phone or email to book your preferred spa service. Our team will assist you in scheduling an appointment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Cocoglamworld</h4>
+                <p>Your trusted beauty brand for premium cosmetics and spa services.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Cocoglamworld. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
