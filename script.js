@@ -9,6 +9,12 @@ const navMenu = document.getElementById('navMenu');
 if (navToggle) {
     navToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
+        navToggle.classList.toggle('open');
+        if (navToggle.classList.contains('open')) {
+            navToggle.setAttribute('aria-label', 'Close menu');
+        } else {
+            navToggle.setAttribute('aria-label', 'Open menu');
+        }
     });
 }
 
@@ -17,6 +23,7 @@ const navLinks = document.querySelectorAll('.nav-menu a');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
+        navToggle.classList.remove('open');
     });
 });
 
@@ -34,6 +41,9 @@ function createProductCard(product) {
     }
 
     inner += `<h3>${product.name}</h3>`;
+    if (!product.comingSoon && product.price !== undefined) {
+        inner += `<p class="product-price">₦${product.price.toFixed(2)}</p>`;
+    }
     if (product.swatch) {
         inner += `<div class="swatch" style="background:${product.swatch};"></div>`;
     }
