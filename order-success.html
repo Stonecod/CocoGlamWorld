@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful - Cocoglamworld</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .success-section {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-container {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            padding: 60px 40px;
+            max-width: 600px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        .success-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: white;
+        }
+        .success-container p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .success-reference {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .success-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .success-buttons a {
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+        .success-buttons a.btn-home {
+            background: white;
+            color: var(--primary-color);
+        }
+        .success-buttons a.btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .success-buttons a.btn-products {
+            background: transparent;
+            color: white;
+        }
+        .success-buttons a.btn-products:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="images/newlogo-removebg-preview.png" alt="Cocoglamworld Logo"></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Success Section -->
+    <section class="success-section">
+        <div class="success-container">
+            <div class="success-icon">✓</div>
+            <h1>Payment Successful!</h1>
+            <p>Thank you for your order. Your payment has been processed successfully.</p>
+            <p>You will receive an email confirmation shortly with your order details and tracking information.</p>
+            <div class="success-reference">
+                Order Reference: COCOGLAMWORLD_{{ reference }}
+            </div>
+            <p style="font-size: 0.95em; margin-top: 20px;">Keep this reference for your records.</p>
+            <div class="success-buttons">
+                <a href="index.html" class="btn-home">Back to Home</a>
+                <a href="products.html" class="btn-products">Continue Shopping</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Cocoglamworld</h4>
+                <p>Your trusted beauty brand for premium cosmetics and spa services.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Cocoglamworld. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

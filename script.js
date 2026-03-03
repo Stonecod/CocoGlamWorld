@@ -44,6 +44,17 @@ function createProductCard(product) {
     if (!product.comingSoon && product.price !== undefined) {
         inner += `<p class="product-price">₦${product.price.toFixed(2)}</p>`;
     }
+    
+    // Add beauty badges
+    if (product.badges && product.badges.length > 0) {
+        inner += `<div class="product-badges">`;
+        product.badges.forEach(badge => {
+            const badgeClass = badge.toLowerCase().replace(/\s+/g, '-');
+            inner += `<span class="badge ${badgeClass}">${badge}</span>`;
+        });
+        inner += `</div>`;
+    }
+    
     if (product.swatch) {
         inner += `<div class="swatch" style="background:${product.swatch};"></div>`;
     }
@@ -137,7 +148,7 @@ function updateOrderPrice() {
     const productSelect = document.getElementById('orderProduct');
     const qtyInput = document.getElementById('orderQuantity');
     const priceDisplay = document.getElementById('priceDisplay');
-    const totalInput = document.getElementById('orderTotal');
+    const totalInput = document.getElementById('totalAmount');
     if (!productSelect || !qtyInput || !priceDisplay || !totalInput) return;
 
     const selected = productSelect.options[productSelect.selectedIndex];
@@ -213,6 +224,92 @@ function observeProductItem(item) {
     item.style.transform = 'translateY(20px)';
     item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     productsObserver.observe(item);
+}
+
+// ========================================
+// PAYSTACK PAYMENT INTEGRATION
+// ========================================
+
+function payWithPaystack() {
+    // Get form values
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const totalAmountField = document.getElementById('totalAmount');
+    const productSelect = document.getElementById('orderProduct');
+    const quantityField = document.getElementById('orderQuantity');
+    
+    // Get the total amount in Naira
+    const totalAmount = parseFloat(totalAmountField.value) || 0;
+    
+    // Validation
+    if (!email) {
+        alert('Please enter your email address');
+        return;
+    }
+    
+    if (!fullName) {
+        alert('Please enter your full name');
+        return;
+    }
+    
+    if (!phone) {
+        alert('Please enter your phone number');
+        return;
+    }
+    
+    if (!address) {
+        alert('Please enter your delivery address');
+        return;
+    }
+    
+    if (totalAmount <= 0) {
+        alert('Please select a valid product and quantity');
+        return;
+    }
+    
+    if (!productSelect.value) {
+        alert('Please select a product');
+        return;
+    }
+    
+    // Convert amount to kobo (Paystack uses kobo as smallest unit)
+    const amountInKobo = Math.round(totalAmount * 100);
+    
+    // Initialize Paystack payment
+    const handler = PaystackPop.setup({
+        key: 'YOUR_PAYSTACK_PUBLIC_KEY', // Replace with your Paystack public key
+        email: email,
+        amount: amountInKobo,
+        currency: 'NGN',
+        ref: 'COCOGLAMWORLD_' + Math.floor((Math.random() * 1000000000) + 1), // Unique reference
+        onClose: function() {
+            alert('Transaction cancelled');
+        },
+        onSuccess: function(response) {
+            // Payment was successful
+            alert('Payment Successful!');
+            console.log('Transaction Reference: ' + response.reference);
+            
+            // Log transaction details
+            console.log({
+                reference: response.reference,
+                customer: fullName,
+                email: email,
+                phone: phone,
+                address: address,
+                product: productSelect.value,
+                quantity: quantityField.value,
+                amount: totalAmount
+            });
+            
+            // Redirect to success page
+            window.location.href = 'order-success.html';
+        }
+    });
+    
+    handler.openIframe();
 }
 
 // modify render functions earlier to call observeProductItem after creating cards

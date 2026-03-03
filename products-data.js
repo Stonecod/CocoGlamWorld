@@ -13,7 +13,8 @@ const productsData = [
         imageUrl: "images/Brightorangegloss.jpg",
         price: 3500,
         description: "Rich ruby-red gloss with mirror-like shine.",
-        benefits: ["High shine", "Hydrating", "Long-lasting"]
+        benefits: ["High shine", "Hydrating", "Long-lasting"],
+        badges: ["Long-lasting", "Hydrating"]
     },
     {
         id: 2,
@@ -23,7 +24,8 @@ const productsData = [
         imageUrl: "images/Lipglossinbrown.jpg",
         price: 3500,
         description: "Subtle nude shade that enhances natural lip tone.",
-        benefits: ["Sheer finish", "Moisturizing", "Non-sticky"]
+        benefits: ["Sheer finish", "Moisturizing", "Non-sticky"],
+        badges: ["Cruelty-Free", "Natural"]
     },
     {
         id: 3,
@@ -33,7 +35,8 @@ const productsData = [
         imageUrl: "images/Lightpinkgloss.jpg",
         price: 3500,
         description: "Soft pink gloss inspired by spring blossom.",
-        benefits: ["Delicate color", "Vitamin E", "Smooth application"]
+        benefits: ["Delicate color", "Vitamin E", "Smooth application"],
+        badges: ["Bestseller", "Hydrating"]
     },
     {
         id: 4,
@@ -43,7 +46,8 @@ const productsData = [
         imageUrl: "images/Lipglosschocolate.jpg",
         price: 3500,
         description: "Warm cocoa shade with a kiss of shimmer.",
-        benefits: ["Rich pigment", "Glossy finish", "Nourishing"]
+        benefits: ["Rich pigment", "Glossy finish", "Nourishing"],
+        badges: ["Natural", "Cruelty-Free"]
     },
     {
         id: 5,
@@ -53,7 +57,8 @@ const productsData = [
         imageUrl: "images/Transparentlipgloss.jpg",
         price: 3000,
         description: "Crystal clear gloss for an ultra-glassy look.",
-        benefits: ["Crystal clarity", "Lightweight", "Universal"]
+        benefits: ["Crystal clarity", "Lightweight", "Universal"],
+        badges: ["Long-lasting"]
     },
 
     // FACE CARE PRODUCTS (Coming Soon)

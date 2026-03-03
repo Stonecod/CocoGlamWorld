@@ -47,12 +47,12 @@
         </div>
     </section>
 
-    <!-- Order Form -->
+    <!-- Order Form with Paystack Payment -->
     <section class="order-form">
         <div class="container">
             <h2>Place an Order</h2>
-            <p>Select a product and fill out the form below. We'll get back to you with confirmation.</p>
-            <form action="https://formspree.io/f/xqednlyq" method="POST" class="order-form-element" id="orderForm">
+            <p>Select a product and fill out the form below to proceed to payment.</p>
+            <form class="order-form-element" id="orderForm">
                 <div class="form-group">
                     <label for="orderProduct">Product</label>
                     <select name="product" id="orderProduct" required>
@@ -65,20 +65,24 @@
                     <input type="number" id="orderQuantity" name="quantity" value="1" min="1" required>
                 </div>
                 <p id="priceDisplay" class="form-price">Price: ₦0</p>
-                <input type="hidden" id="orderTotal" name="total" value="0">
+                <input type="hidden" id="totalAmount" value="0">
                 <div class="form-group">
-                    <label for="orderName">Your Name</label>
-                    <input type="text" id="orderName" name="name" required>
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
                 </div>
                 <div class="form-group">
-                    <label for="orderEmail">Email Address</label>
-                    <input type="email" id="orderEmail" name="email" required>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="orderMessage">Additional Details</label>
-                    <textarea id="orderMessage" name="message" rows="3"></textarea>
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit Order</button>
+                <div class="form-group">
+                    <label for="address">Delivery Address</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Enter your complete delivery address" required></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="payWithPaystack()">Complete Payment</button>
             </form>
         </div>
     </section>
@@ -114,5 +118,6 @@
 
     <script src="products-data.js"></script>
     <script src="script.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 </body>
 </html>
