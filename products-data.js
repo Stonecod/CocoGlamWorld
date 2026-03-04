@@ -154,5 +154,5 @@ const productsData = [
     }
 ];
 
-// FEATURED PRODUCTS FOR HOMEPAGE (displays first 4 lips products)
-const featuredProducts = productsData.filter(p => p.category === 'lips').slice(0, 4);
+// FEATURED PRODUCTS FOR HOMEPAGE (displays first 2 lips products)
+const featuredProducts = productsData.filter(p => p.category === 'lips').slice(0, 2);

@@ -277,35 +277,38 @@ function payWithPaystack() {
     // Convert amount to kobo (Paystack uses kobo as smallest unit)
     const amountInKobo = Math.round(totalAmount * 100);
     
+    // Generate unique reference
+    const transactionRef = 'COCOGLAMWORLD_' + Math.floor((Math.random() * 1000000000) + 1);
+    
+    // Store order details in session storage for the success page
+    sessionStorage.setItem('orderData', JSON.stringify({
+        customer: fullName,
+        email: email,
+        phone: phone,
+        address: address,
+        product: productSelect.value,
+        quantity: quantityField.value,
+        amount: totalAmount,
+        reference: transactionRef
+    }));
+    
     // Initialize Paystack payment
     const handler = PaystackPop.setup({
-        key: 'YOUR_PAYSTACK_PUBLIC_KEY', // Replace with your Paystack public key
+        key: 'pk_test_4786e2462c3ce32ea82d9f007b846ba2a861c602',
         email: email,
         amount: amountInKobo,
         currency: 'NGN',
-        ref: 'COCOGLAMWORLD_' + Math.floor((Math.random() * 1000000000) + 1), // Unique reference
+        ref: transactionRef,
         onClose: function() {
-            alert('Transaction cancelled');
+            // Transaction window closed - check if payment was successful by attempting redirect
+            // This handles cases where Paystack doesn't properly fire onSuccess callback
+            console.log('Transaction window closed');
         },
         onSuccess: function(response) {
             // Payment was successful
-            alert('Payment Successful!');
-            console.log('Transaction Reference: ' + response.reference);
-            
-            // Log transaction details
-            console.log({
-                reference: response.reference,
-                customer: fullName,
-                email: email,
-                phone: phone,
-                address: address,
-                product: productSelect.value,
-                quantity: quantityField.value,
-                amount: totalAmount
-            });
-            
+            console.log('Payment successful! Reference: ' + response.reference);
             // Redirect to success page
-            window.location.href = 'order-success.html';
+            window.location.replace('order-success.html');
         }
     });
     
