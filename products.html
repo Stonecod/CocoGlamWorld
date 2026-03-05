@@ -21,7 +21,7 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html" class="active">Products</a></li>
-                <li><a href="index.html#services">Services</a></li>
+                <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -53,11 +53,11 @@
         <div class="container">
             <h2>Place an Order</h2>
             <p>Select a product and fill out the form below to proceed to payment.</p>
-            <form class="order-form-element" id="orderForm">
+            <form class="order-form-element" id="orderForm" action="https://formspree.io/f/xqednlyq" method="POST">
                 <div class="form-group">
-                    <label for="orderProduct">Product</label>
-                    <select name="product" id="orderProduct" required>
-                        <option value="">-- select a product --</option>
+                    <label for="orderProduct">Product / Service</label>
+                    <select name="item" id="orderProduct" required>
+                        <option value="">-- select an item or service --</option>
                         <!-- options injected by JavaScript -->
                     </select>
                 </div>
@@ -65,21 +65,29 @@
                     <label for="orderQuantity">Quantity</label>
                     <input type="number" id="orderQuantity" name="quantity" value="1" min="1" required>
                 </div>
+                <div class="form-group" id="paymentOptions" style="display:none;">
+                    <label>Payment Type</label><br>
+                    <label><input type="radio" name="paymentType" value="deposit30" checked> 30% deposit</label>
+                    <label style="margin-left:20px;"><input type="radio" name="paymentType" value="deposit50"> 50% deposit</label>
+                    <label style="margin-left:20px;"><input type="radio" name="paymentType" value="full"> Full payment</label>
+                </div>
                 <p id="priceDisplay" class="form-price">Price: ₦0</p>
-                <input type="hidden" id="totalAmount" value="0">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                <input type="hidden" id="totalAmount" name="price" value="0">
+                <div id="appointmentFields" style="display:none;">
+                    <div class="form-group">
+                        <label for="appointmentDate">Preferred Appointment Date</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentTime">Preferred Appointment Time</label>
+                        <input type="time" id="appointmentTime" name="appointmentTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="3"></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <div class="form-group">
+                <div class="form-group" id="addressGroup">
                     <label for="address">Delivery Address</label>
                     <textarea id="address" name="address" rows="3" placeholder="Enter your complete delivery address" required></textarea>
                 </div>

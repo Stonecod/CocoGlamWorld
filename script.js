@@ -2,6 +2,9 @@
 // COCOGLAMWORLD - MAIN SCRIPT
 // ========================================
 
+// global state for order type
+let currentOrderType = 'product';
+
 // Mobile Navigation Toggle
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
@@ -66,19 +69,227 @@ function createProductCard(product) {
         if (product.benefits && product.benefits.length > 0) {
             inner += `<p class="product-benefits">` + product.benefits.map(b => `✓ ${b}`).join(' ') + `</p>`;
         }
-        inner += `<button class="btn btn-primary buy-now-btn" data-product-id="${product.id}" data-product-name="${product.name}">Buy Now</button>`;
+        inner += `<button class="btn btn-primary buy-now-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price || 0}">Buy Now</button>`;
     }
 
     card.innerHTML = inner;
     return card;
 }
 
+// ========================================
+// SERVICE PAGE RENDERING & BOOKING
+// ========================================
+
+// create a service card for the services page
+function createServiceCard(service) {
+    const card = document.createElement('div');
+    card.className = 'service-card';
+    card.setAttribute('data-service-name', service.name);
+    card.setAttribute('data-service-price', service.price);
+
+    let inner = '';
+    // choose user‑provided image if available, otherwise fall back to placeholder
+    const imgSrc = service.imageUrl ? service.imageUrl :
+        `https://via.placeholder.com/400x200?text=${encodeURIComponent(service.name)}`;
+    inner += `<img src="${imgSrc}" alt="${service.name} - professional spa treatment">`;
+
+    if (service.popular) {
+        inner += `<div class="service-badge">Most Popular</div>`;
+    }
+    inner += `<div class="service-info">`;
+    inner += `<h3>${service.name}</h3>`;
+    inner += `<p>${service.description}</p>`;
+    inner += `<div class="service-meta">Duration: ${service.duration}</div>`;
+    inner += `<div class="service-meta">Price: ₦${service.price.toLocaleString()}</div>`;
+    inner += `<button class="book-btn" data-service-name="${service.name}" data-service-price="${service.price}">Book Appointment</button>`;
+    inner += `</div>`;
+
+    card.innerHTML = inner;
+    return card;
+}
+
+// render services grouped by category
+function renderServices() {
+    const container = document.getElementById('servicesContainer');
+    if (!container || !Array.isArray(servicesData)) return;
+    container.innerHTML = '';
+
+    const categories = [...new Set(servicesData.map(s => s.category))];
+    categories.forEach(cat => {
+        const section = document.createElement('div');
+        section.className = 'services-category';
+        const heading = document.createElement('h2');
+        heading.textContent = cat;
+        section.appendChild(heading);
+
+        const grid = document.createElement('div');
+        grid.className = 'services-grid';
+
+        servicesData.filter(s => s.category === cat).forEach(svc => {
+            const card = createServiceCard(svc);
+            grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
+    });
+
+    // delegate booking click
+    container.addEventListener('click', function(e) {
+        if (e.target.classList.contains('book-btn')) {
+            const name = e.target.dataset.serviceName;
+            const price = e.target.dataset.servicePrice;
+            window.location.href = `products.html?type=service&name=${encodeURIComponent(name)}&price=${price}#orderForm`;
+        }
+    });
+}
+
+// check URL parameters when order page loads
+function handleQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('type');
+    const name = params.get('name');
+    const price = parseFloat(params.get('price')) || 0;
+    if (type === 'service' && name) {
+        currentOrderType = 'service';
+        // populate select with single option
+        populateOrderSelect([{name: name, price: price}]);
+        const productSelect = document.getElementById('orderProduct');
+        if (productSelect) {
+            productSelect.value = name;
+        }
+        // disable quantity
+        const qty = document.getElementById('orderQuantity');
+        if (qty) {
+            qty.value = 1;
+            qty.disabled = true;
+        }
+        // show service-specific UI
+        showServiceFields();
+        updateOrderPrice();
+    }
+}
+
+function showServiceFields() {
+    const paymentOpts = document.getElementById('paymentOptions');
+    const appointment = document.getElementById('appointmentFields');
+    const addressGroup = document.getElementById('addressGroup');
+    if (paymentOpts) paymentOpts.style.display = 'block';
+    if (appointment) {
+        appointment.style.display = 'block';
+        // require date and time when booking a service
+        const dateEl = document.getElementById('appointmentDate');
+        const timeEl = document.getElementById('appointmentTime');
+        if (dateEl) dateEl.setAttribute('required', '');
+        if (timeEl) timeEl.setAttribute('required', '');
+    }
+    if (addressGroup) {
+        addressGroup.style.display = 'none';
+        // make address not required when booking a service
+        const addr = document.getElementById('address');
+        if (addr) addr.removeAttribute('required');
+    }
+}
+
+function showProductFields() {
+    const paymentOpts = document.getElementById('paymentOptions');
+    const appointment = document.getElementById('appointmentFields');
+    const addressGroup = document.getElementById('addressGroup');
+    if (paymentOpts) paymentOpts.style.display = 'none';
+    if (appointment) {
+        appointment.style.display = 'none';
+        const dateEl = document.getElementById('appointmentDate');
+        const timeEl = document.getElementById('appointmentTime');
+        if (dateEl) dateEl.removeAttribute('required');
+        if (timeEl) timeEl.removeAttribute('required');
+    }
+    if (addressGroup) {
+        addressGroup.style.display = 'block';
+        const addr = document.getElementById('address');
+        if (addr) addr.setAttribute('required', '');
+    }
+}
+
+// modify populateOrderSelect to accept custom items
+function populateOrderSelect(items) {
+    const select = document.getElementById('orderProduct');
+    if (!select) return;
+    select.innerHTML = ''; // clear existing
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = '-- select an item or service --';
+    select.appendChild(placeholder);
+
+    const list = items || productsData;
+    if (!Array.isArray(list)) return;
+    list.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.name;
+        opt.textContent = `${p.name}`;
+        opt.dataset.price = p.price || 0;
+        select.appendChild(opt);
+    });
+}
+
+// update price calculation to account for service deposit/full
+function updateOrderPrice() {
+    const productSelect = document.getElementById('orderProduct');
+    const qtyInput = document.getElementById('orderQuantity');
+    const priceDisplay = document.getElementById('priceDisplay');
+    const totalInput = document.getElementById('totalAmount');
+    if (!productSelect || !qtyInput || !priceDisplay || !totalInput) return;
+
+    const selected = productSelect.options[productSelect.selectedIndex];
+    const unitPrice = parseFloat(selected.dataset.price) || 0;
+    const qty = parseInt(qtyInput.value, 10) || 1;
+    let total = unitPrice * qty;
+
+    let displayLabel = 'Price';
+    if (currentOrderType === 'service') {
+        const payType = document.querySelector('input[name="paymentType"]:checked');
+        if (payType) {
+            if (payType.value === 'deposit30') {
+                total = total * 0.3; // 30% deposit
+                displayLabel = '30% Deposit';
+            } else if (payType.value === 'deposit50') {
+                total = total * 0.5; // 50% deposit
+                displayLabel = '50% Deposit';
+            } else {
+                displayLabel = 'Total';
+            }
+        }
+    }
+
+    priceDisplay.textContent = `${displayLabel}: ₦${total.toFixed(2)}`;
+    totalInput.value = total.toFixed(2);
+}
+
+// listen for payment type changes
+function setupPaymentOptions() {
+    const radios = document.querySelectorAll('input[name="paymentType"]');
+    radios.forEach(r => {
+        r.addEventListener('change', updateOrderPrice);
+    });
+}
+
+
 // Handle Buy Now button clicks
 function handleBuyNowClick(e) {
     if (e.target.classList.contains('buy-now-btn')) {
+        currentOrderType = 'product';
+        showProductFields();
         const productName = e.target.getAttribute('data-product-name');
         const productSelect = document.getElementById('orderProduct');
         if (productSelect) {
+            // if select does not contain this option (e.g. page loaded with service URL)
+            let opt = Array.from(productSelect.options).find(o => o.value === productName);
+            if (!opt) {
+                opt = document.createElement('option');
+                opt.value = productName;
+                opt.textContent = productName;
+                opt.dataset.price = e.target.getAttribute('data-product-price') || '0';
+                productSelect.appendChild(opt);
+            }
             productSelect.value = productName;
             updateOrderPrice();
             setTimeout(() => {
@@ -130,34 +341,7 @@ function setupFilterButtons() {
     });
 }
 
-// Populate order dropdown
-function populateOrderSelect() {
-    const select = document.getElementById('orderProduct');
-    if (!select || !Array.isArray(productsData)) return;
-    productsData.forEach(p => {
-        const opt = document.createElement('option');
-        opt.value = p.name;
-        opt.textContent = `${p.name}`;
-        opt.dataset.price = p.price || 0;
-        select.appendChild(opt);
-    });
-}
 
-// calculate and display order total based on selected product and quantity
-function updateOrderPrice() {
-    const productSelect = document.getElementById('orderProduct');
-    const qtyInput = document.getElementById('orderQuantity');
-    const priceDisplay = document.getElementById('priceDisplay');
-    const totalInput = document.getElementById('totalAmount');
-    if (!productSelect || !qtyInput || !priceDisplay || !totalInput) return;
-
-    const selected = productSelect.options[productSelect.selectedIndex];
-    const unitPrice = parseFloat(selected.dataset.price) || 0;
-    const qty = parseInt(qtyInput.value, 10) || 1;
-    const total = unitPrice * qty;
-    priceDisplay.textContent = `Price: ₦${total.toFixed(2)}`;
-    totalInput.value = total.toFixed(2);
-}
 
 // call initial render when DOM ready
 if (document.readyState === 'loading') {
@@ -166,43 +350,61 @@ if (document.readyState === 'loading') {
         renderFeatured();
         setupFilterButtons();
         populateOrderSelect();
+        setupPaymentOptions();
         const orderProduct = document.getElementById('orderProduct');
         const orderQuantity = document.getElementById('orderQuantity');
-        if (orderProduct) orderProduct.addEventListener('change', updateOrderPrice);
+        if (orderProduct) orderProduct.addEventListener('change', () => {
+            // determine type based on URL parameter
+            currentOrderType = (window.location.search.indexOf('type=service') !== -1) ? 'service' : 'product';
+            if (currentOrderType === 'service') showServiceFields(); else showProductFields();
+            updateOrderPrice();
+        });
         if (orderQuantity) orderQuantity.addEventListener('input', updateOrderPrice);
         updateOrderPrice();
+        handleQueryParams();
         new TestimonialSlider();
+        // if on services page, render list
+        if (document.getElementById('servicesContainer')) renderServices();
     });
 } else {
     renderProducts();
     renderFeatured();
     setupFilterButtons();
     populateOrderSelect();
+    setupPaymentOptions();
     const orderProduct = document.getElementById('orderProduct');
     const orderQuantity = document.getElementById('orderQuantity');
-    if (orderProduct) orderProduct.addEventListener('change', updateOrderPrice);
+    if (orderProduct) orderProduct.addEventListener('change', () => {
+        currentOrderType = (window.location.search.indexOf('type=service') !== -1) ? 'service' : 'product';
+        if (currentOrderType === 'service') showServiceFields(); else showProductFields();
+        updateOrderPrice();
+    });
     if (orderQuantity) orderQuantity.addEventListener('input', updateOrderPrice);
     updateOrderPrice();
+    handleQueryParams();
     new TestimonialSlider();
+    if (document.getElementById('servicesContainer')) renderServices();
 }
-
 // Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+function enableSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
-});
+}
+// initialize it once
+enableSmoothScroll();
 
 // Newsletter Form Handling
 // The form action is configured to use Formspree, so no
-// JavaScript interception is necessary. If you wish to show
 // a custom message before redirecting, you can add a listener
 // here, but avoid calling `preventDefault()`.
 
@@ -237,13 +439,27 @@ function payWithPaystack() {
     const fullName = document.getElementById('fullName').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
-    const address = document.getElementById('address').value.trim();
+    const addressField = document.getElementById('address');
+    const address = addressField ? addressField.value.trim() : '';
     const totalAmountField = document.getElementById('totalAmount');
     const productSelect = document.getElementById('orderProduct');
     const quantityField = document.getElementById('orderQuantity');
-    
+
+    // booking fields
+    const appointmentDate = document.getElementById('appointmentDate') ? document.getElementById('appointmentDate').value : '';
+    const appointmentTime = document.getElementById('appointmentTime') ? document.getElementById('appointmentTime').value : '';
+    const notes = document.getElementById('notes') ? document.getElementById('notes').value.trim() : '';
+
     // Get the total amount in Naira
-    const totalAmount = parseFloat(totalAmountField.value) || 0;
+    let totalAmount = parseFloat(totalAmountField.value) || 0;
+
+    // Determine if service and apply deposit/full logic
+    let paymentType = 'full';
+    if (currentOrderType === 'service') {
+        const payTypeEl = document.querySelector('input[name="paymentType"]:checked');
+        if (payTypeEl) paymentType = payTypeEl.value;
+        // totalAmount should already reflect deposit or full payment from updateOrderPrice
+    }
     
     // Validation
     if (!email) {
@@ -261,7 +477,7 @@ function payWithPaystack() {
         return;
     }
     
-    if (!address) {
+    if (currentOrderType !== 'service' && !address) {
         alert('Please enter your delivery address');
         return;
     }
@@ -291,6 +507,10 @@ function payWithPaystack() {
         product: productSelect.value,
         quantity: quantityField.value,
         amount: totalAmount,
+        appointmentDate: appointmentDate,
+        appointmentTime: appointmentTime,
+        notes: notes,
+        paymentType: paymentType,
         reference: transactionRef
     }));
     
@@ -309,8 +529,33 @@ function payWithPaystack() {
         onSuccess: function(response) {
             // Payment was successful
             console.log('Payment successful! Reference: ' + response.reference);
-            // Redirect to success page
-            window.location.replace('order-success.html');
+            // send details to Formspree
+            const formspreeEndpoint = 'https://formspree.io/f/xqednlyq';
+            const formData = new FormData();
+            formData.append('name', fullName);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('item', productSelect.value);
+            formData.append('price', totalAmount);
+            formData.append('quantity', quantityField.value);
+            formData.append('paymentReference', response.reference);
+            if (currentOrderType === 'service') {
+                formData.append('appointmentDate', appointmentDate);
+                formData.append('appointmentTime', appointmentTime);
+                formData.append('notes', notes);
+                formData.append('paymentType', paymentType);
+            }
+            // optional address
+            if (address) formData.append('address', address);
+
+            fetch(formspreeEndpoint, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            }).finally(() => {
+                // Redirect whether or not the submission succeeded
+                window.location.replace('order-success.html');
+            });
         }
     });
     

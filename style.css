@@ -477,6 +477,111 @@ h4 {
     padding: 100px 20px;
 }
 
+/* Service Listing Page */
+.services-listing {
+    background-color: #fff7f9;
+    padding: 80px 0;
+}
+
+.services-listing h2 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.services-category {
+    margin-bottom: 60px;
+}
+
+.services-category h2 {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.service-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.service-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.service-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-info h3 {
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.service-info p {
+    flex-grow: 1;
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.service-meta {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.service-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.book-btn {
+    margin-top: auto;
+    padding: 12px 20px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.book-btn:hover {
+    background: var(--secondary-color);
+}
+
 .services h2 {
     text-align: center;
     margin-bottom: 80px;
@@ -556,11 +661,6 @@ h4 {
         transform: translateY(0);
     }
 }
-    font-weight: 300;
-    position: relative;
-    z-index: 1;
-}
-
 .service-card img {
     width: 100%;
     height: 200px;
@@ -871,6 +971,19 @@ h4 {
 .dot.active {
     background: var(--secondary-color);
     transform: scale(1.2);
+}
+
+/* Payment choices / appointment fields */
+#paymentOptions {
+    margin-top: 20px;
+}
+#paymentOptions label {
+    font-size: 0.95rem;
+    margin-right: 15px;
+    cursor: pointer;
+}
+#appointmentFields .form-group {
+    margin-top: 15px;
 }
 
 /* Newsletter Section */
@@ -1579,6 +1692,29 @@ h4 {
         padding: 60px 20px;
     }
 
+    /* Responsive Service Listing */
+    .services-listing {
+        padding: 60px 15px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .service-card img {
+        height: 220px;
+    }
+
+    .service-info h3 {
+        font-size: 1.2rem;
+    }
+
+    .book-btn {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+    }
+
     .features h2 {
         font-size: 2rem;
         margin-bottom: 40px;
@@ -1697,6 +1833,28 @@ h4 {
     /* About Split Section */
     .about {
         padding: 0;
+    }
+
+    /* service listing mobile tweaks */
+    .services-listing {
+        padding: 50px 10px;
+    }
+
+    .services-grid {
+        gap: 15px;
+    }
+
+    .service-card img {
+        height: 160px;
+    }
+
+    .service-info h3 {
+        font-size: 1rem;
+    }
+
+    .book-btn {
+        padding: 8px 14px;
+        font-size: 0.9rem;
     }
 
     .about-split {

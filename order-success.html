@@ -92,7 +92,7 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
-                <li><a href="index.html#services">Services</a></li>
+                <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -105,9 +105,10 @@
             <h1>Payment Successful!</h1>
             <p>Thank you for your order. Your payment has been processed successfully.</p>
             <p>You will receive an email confirmation shortly with your order details and tracking information.</p>
-            <div class="success-reference">
-                Order Reference: COCOGLAMWORLD_{{ reference }}
+            <div class="success-reference" id="successReference">
+                Order Reference: 
             </div>
+            <div id="successDetails" style="margin-top:20px; font-size:1rem; text-align:left; color:#fff;"></div>
             <p style="font-size: 0.95em; margin-top: 20px;">Keep this reference for your records.</p>
             <div class="success-buttons">
                 <a href="index.html" class="btn-home">Back to Home</a>
@@ -145,6 +146,36 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // populate with sessionStorage data
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = sessionStorage.getItem('orderData');
+            if (!data) return;
+            try {
+                const obj = JSON.parse(data);
+                const refEl = document.getElementById('successReference');
+                if (refEl) refEl.textContent = 'Order Reference: ' + (obj.reference || '');
+                const detailsEl = document.getElementById('successDetails');
+                if (detailsEl) {
+                    let html = '';
+                    if (obj.product) html += `<p><strong>Item:</strong> ${obj.product}</p>`;
+                    if (obj.quantity) html += `<p><strong>Quantity:</strong> ${obj.quantity}</p>`;
+                    if (obj.amount) html += `<p><strong>Amount Paid:</strong> ₦${parseFloat(obj.amount).toFixed(2)}</p>`;
+                    if (obj.appointmentDate) html += `<p><strong>Appointment:</strong> ${obj.appointmentDate} ${obj.appointmentTime || ''}</p>`;
+                    if (obj.notes) html += `<p><strong>Notes:</strong> ${obj.notes}</p>`;
+                    if (obj.paymentType) {
+                    let friendly = obj.paymentType;
+                    if (friendly === 'deposit30') friendly = '30% deposit';
+                    else if (friendly === 'deposit50') friendly = '50% deposit';
+                    else if (friendly === 'full') friendly = 'Full payment';
+                    html += `<p><strong>Payment Type:</strong> ${friendly}</p>`;
+                }
+                    detailsEl.innerHTML = html;
+                }
+            } catch (e) {
+                console.error('Error parsing order data', e);
+            }
+        });
+    </script>
 </body>
 </html>
