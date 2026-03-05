@@ -39,14 +39,20 @@
 
     <!-- About Section -->
     <section class="about" aria-label="About us section with background image of woman with natural beauty">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>
-                Cocoglamworld is a premium beauty brand dedicated to enhancing your natural beauty and elevating your confidence. 
-                We offer meticulously crafted cosmetics and provide luxurious spa services designed to ensure you feel pampered, 
-                rejuvenated, and utterly radiant. Our mission is to help you discover your best self through quality products and 
-                professional expertise that exceeds expectations.
-            </p>
+        <div class="about-split">
+            <div class="about-image">
+                <img src="images/herobackground.jpg" alt="Woman with natural beauty" />
+            </div>
+            <div class="about-content">
+                <h2>About Us</h2>
+                <p>
+                    Cocoglamworld is a premium beauty brand dedicated to enhancing your natural beauty and elevating your confidence. 
+                    We offer meticulously crafted cosmetics and provide luxurious spa services designed to ensure you feel pampered, 
+                    rejuvenated, and utterly radiant. Our mission is to help you discover your best self through quality products and 
+                    professional expertise that exceeds expectations.
+                </p>
+                <a href="products.html" class="btn btn-primary">Explore Our Products</a>
+            </div>
         </div>
     </section>
 
@@ -83,26 +89,42 @@
     <section class="services" id="services">
         <div class="container">
             <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <img src="images/facialtreatment.jpg" alt="Facial treatment session" loading="lazy" />
-                    <h3>Facial Treatments</h3>
-                    <p>Rejuvenating facials designed to cleanse, hydrate, and revitalize your skin</p>
+            <div class="services-flow">
+                <div class="service-block">
+                    <div class="service-content">
+                        <h3>Facial Treatments</h3>
+                        <p>Rejuvenating facials designed to cleanse, hydrate, and revitalize your skin with our premium, natural ingredients.</p>
+                    </div>
+                    <div class="service-image">
+                        <img src="images/facialtreatment.jpg" alt="Facial treatment session" loading="lazy" />
+                    </div>
                 </div>
-                <div class="service-card">
-                    <img src="images/spatherapy.jpg" alt="Spa therapy environment" loading="lazy" />
-                    <h3>Spa Therapy</h3>
-                    <p>Luxurious spa treatments to relax muscles and refresh your mind</p>
+                <div class="service-block reverse">
+                    <div class="service-content">
+                        <h3>Spa Therapy</h3>
+                        <p>Luxurious spa treatments to relax muscles and refresh your mind, delivered by our experienced therapists.</p>
+                    </div>
+                    <div class="service-image">
+                        <img src="images/spatherapy.jpg" alt="Spa therapy environment" loading="lazy" />
+                    </div>
                 </div>
-                <div class="service-card">
-                    <img src="images/Happycustomerconsultation.jpg" alt="Beauty consultation session" loading="lazy" />
-                    <h3>Beauty Consultation</h3>
-                    <p>Expert advice on choosing the right products for your skin type</p>
+                <div class="service-block">
+                    <div class="service-content">
+                        <h3>Beauty Consultation</h3>
+                        <p>Expert advice on choosing the right products for your skin type, personalized to your unique beauty journey.</p>
+                    </div>
+                    <div class="service-image">
+                        <img src="images/Happycustomerconsultation.jpg" alt="Beauty consultation session" loading="lazy" />
+                    </div>
                 </div>
-                <div class="service-card">
-                    <img src="images/Makeupapplicationservice.jpg" alt="Makeup application service" loading="lazy" />
-                    <h3>Makeup Application</h3>
-                    <p>Professional makeup services for events and special occasions</p>
+                <div class="service-block reverse">
+                    <div class="service-content">
+                        <h3>Makeup Application</h3>
+                        <p>Professional makeup services for events and special occasions, ensuring you look and feel your absolute best.</p>
+                    </div>
+                    <div class="service-image">
+                        <img src="images/Makeupapplicationservice.jpg" alt="Makeup application service" loading="lazy" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,21 +147,33 @@
     <section class="testimonials">
         <div class="container">
             <h2>What Our Customers Say</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="stars">★★★★★</p>
-                    <p>"Cocoglamworld products transformed my skincare routine. My skin has never looked better! The quality is absolutely unmatched and I've recommended it to all my friends."</p>
-                    <p class="customer-name">— Sarah M., Beauty Enthusiast</p>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <blockquote>
+                        <p>"Cocoglamworld products transformed my skincare routine. My skin has never looked better! The quality is absolutely unmatched and I've recommended it to all my friends."</p>
+                        <cite>— Sarah M., Beauty Enthusiast</cite>
+                    </blockquote>
                 </div>
-                <div class="testimonial-card">
-                    <p class="stars">★★★★★</p>
-                    <p>"The spa services are absolutely amazing. I feel completely relaxed and rejuvenated after every visit. The therapists are so professional and attentive to detail."</p>
-                    <p class="customer-name">— Jessica L., Spa Lover</p>
+                <div class="testimonial-slide">
+                    <blockquote>
+                        <p>"The spa services are absolutely amazing. I feel completely relaxed and rejuvenated after every visit. The therapists are so professional and attentive to detail."</p>
+                        <cite>— Jessica L., Spa Lover</cite>
+                    </blockquote>
                 </div>
-                <div class="testimonial-card">
-                    <p class="stars">★★★★★</p>
-                    <p>"Best cosmetics I've used! The quality is outstanding and the results are immediate. Worth every naira spent. I'm a loyal customer for life!"</p>
-                    <p class="customer-name">— Amanda T., Makeup Artist</p>
+                <div class="testimonial-slide">
+                    <blockquote>
+                        <p>"Best cosmetics I've used! The quality is outstanding and the results are immediate. Worth every naira spent. I'm a loyal customer for life!"</p>
+                        <cite>— Amanda T., Makeup Artist</cite>
+                    </blockquote>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-btn prev" aria-label="Previous testimonial">‹</button>
+                    <div class="slider-dots">
+                        <span class="dot active" data-slide="0"></span>
+                        <span class="dot" data-slide="1"></span>
+                        <span class="dot" data-slide="2"></span>
+                    </div>
+                    <button class="slider-btn next" aria-label="Next testimonial">›</button>
                 </div>
             </div>
         </div>

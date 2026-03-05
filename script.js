@@ -171,6 +171,7 @@ if (document.readyState === 'loading') {
         if (orderProduct) orderProduct.addEventListener('change', updateOrderPrice);
         if (orderQuantity) orderQuantity.addEventListener('input', updateOrderPrice);
         updateOrderPrice();
+        new TestimonialSlider();
     });
 } else {
     renderProducts();
@@ -182,6 +183,7 @@ if (document.readyState === 'loading') {
     if (orderProduct) orderProduct.addEventListener('change', updateOrderPrice);
     if (orderQuantity) orderQuantity.addEventListener('input', updateOrderPrice);
     updateOrderPrice();
+    new TestimonialSlider();
 }
 
 // Smooth scrolling for anchor links
@@ -317,3 +319,82 @@ function payWithPaystack() {
 
 // modify render functions earlier to call observeProductItem after creating cards
 // (renderProducts and renderFeatured are defined above that will call it)
+
+// ========================================
+// TESTIMONIAL SLIDER FUNCTIONALITY
+// ========================================
+
+class TestimonialSlider {
+    constructor() {
+        this.slider = document.querySelector('.testimonial-slider');
+        if (!this.slider) return;
+
+        this.slides = this.slider.querySelectorAll('.testimonial-slide');
+        this.dots = this.slider.querySelectorAll('.dot');
+        this.prevBtn = this.slider.querySelector('.slider-btn.prev');
+        this.nextBtn = this.slider.querySelector('.slider-btn.next');
+        this.currentSlide = 0;
+        this.slideInterval = null;
+
+        this.init();
+    }
+
+    init() {
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', () => this.prevSlide());
+        }
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', () => this.nextSlide());
+        }
+
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        // Auto-play functionality
+        this.startAutoPlay();
+
+        // Pause on hover
+        this.slider.addEventListener('mouseenter', () => this.stopAutoPlay());
+        this.slider.addEventListener('mouseleave', () => this.startAutoPlay());
+    }
+
+    showSlide(index) {
+        // Hide all slides
+        this.slides.forEach(slide => slide.classList.remove('active'));
+        this.dots.forEach(dot => dot.classList.remove('active'));
+
+        // Show current slide
+        this.slides[index].classList.add('active');
+        this.dots[index].classList.add('active');
+
+        this.currentSlide = index;
+    }
+
+    nextSlide() {
+        const nextIndex = (this.currentSlide + 1) % this.slides.length;
+        this.showSlide(nextIndex);
+    }
+
+    prevSlide() {
+        const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.showSlide(prevIndex);
+    }
+
+    goToSlide(index) {
+        this.showSlide(index);
+    }
+
+    startAutoPlay() {
+        this.slideInterval = setInterval(() => {
+            this.nextSlide();
+        }, 5000); // Change slide every 5 seconds
+    }
+
+    stopAutoPlay() {
+        if (this.slideInterval) {
+            clearInterval(this.slideInterval);
+            this.slideInterval = null;
+        }
+    }
+}
