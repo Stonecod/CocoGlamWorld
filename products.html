@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse our premium collection of cosmetics, lip glosses, and beauty products. High-quality ingredients, cruelty-free, and dermatologically tested.">
+    <meta name="keywords" content="cosmetics, lip gloss, beauty products, skincare, makeup">
+    <meta property="og:title" content="Our Products - Cocoglamworld">
+    <meta property="og:description" content="Premium beauty products and cosmetics for all skin types. Shop now and get professional beauty results at home.">
+    <meta name="twitter:card" content="summary_large_image">
     <title>Our Products - Cocoglamworld</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -12,7 +17,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><img src="images/newlogo-removebg-preview.png" alt="Cocoglamworld Logo"></a>
+            <a href="index.html" class="logo"><img src="images/mainlogo.jpg" alt="Cocoglamworld Logo"></a>
             <button class="nav-toggle" id="navToggle" aria-label="Open menu">
                 <span></span>
                 <span></span>
@@ -55,8 +60,20 @@
             <p>Select a product and fill out the form below to proceed to payment.</p>
             <form class="order-form-element" id="orderForm" action="https://formspree.io/f/xqednlyq" method="POST">
                 <div class="form-group">
-                    <label for="orderProduct">Product / Service</label>
-                    <select name="item" id="orderProduct" required>
+                    <label for="fullName">Full Name <span style="color: #d32f2f;">*</span></label>
+                    <input type="text" id="fullName" name="name" required minlength="3" pattern="[A-Za-z\s]+" title="Please enter your full name (letters and spaces only)" aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address <span style="color: #d32f2f;">*</span></label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number <span style="color: #d32f2f;">*</span></label>
+                    <input type="tel" id="phone" name="phone" required pattern="[0-9+\-\s()]{7,}" title="Please enter a valid phone number (at least 7 digits)" aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="orderProduct">Product / Service <span style="color: #d32f2f;">*</span></label>
+                    <select name="item" id="orderProduct" required aria-required="true">
                         <option value="">-- select an item or service --</option>
                         <!-- options injected by JavaScript -->
                     </select>
@@ -81,6 +98,13 @@
                     <div class="form-group">
                         <label for="appointmentTime">Preferred Appointment Time</label>
                         <input type="time" id="appointmentTime" name="appointmentTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceLocation">Service Location</label>
+                        <select id="serviceLocation" name="serviceLocation">
+                            <option value="salon">At Our Salon</option>
+                            <option value="home">At Your Home (Double Price)</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="notes">Additional Notes</label>
@@ -114,9 +138,9 @@
             <div class="footer-section">
                 <h4>Follow Us</h4>
                 <div class="social-links">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
                 </div>
             </div>
         </div>

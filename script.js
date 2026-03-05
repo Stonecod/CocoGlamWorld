@@ -15,8 +15,14 @@ if (navToggle) {
         navToggle.classList.toggle('open');
         if (navToggle.classList.contains('open')) {
             navToggle.setAttribute('aria-label', 'Close menu');
+            // Lock scroll when menu opens
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
         } else {
             navToggle.setAttribute('aria-label', 'Open menu');
+            // Unlock scroll when menu closes
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
         }
     });
 }
@@ -27,6 +33,10 @@ navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
         navToggle.classList.remove('open');
+        // Unlock scroll when menu closes
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        navToggle.setAttribute('aria-label', 'Open menu');
     });
 });
 
@@ -231,7 +241,25 @@ function populateOrderSelect(items) {
     });
 }
 
-// update price calculation to account for service deposit/full
+// Select a product from sessionStorage if redirected from Buy Now
+function selectStoredProduct() {
+    const storedProduct = sessionStorage.getItem('selectedProduct');
+    if (storedProduct) {
+        try {
+            const product = JSON.parse(storedProduct);
+            const orderProduct = document.getElementById('orderProduct');
+            if (orderProduct) {
+                orderProduct.value = product.name;
+                updateOrderPrice();
+            }
+            sessionStorage.removeItem('selectedProduct');
+        } catch (e) {
+            console.error('Error parsing selected product:', e);
+        }
+    }
+}
+
+// update price calculation to account for service deposit/full and home services
 function updateOrderPrice() {
     const productSelect = document.getElementById('orderProduct');
     const qtyInput = document.getElementById('orderQuantity');
@@ -246,6 +274,12 @@ function updateOrderPrice() {
 
     let displayLabel = 'Price';
     if (currentOrderType === 'service') {
+        // Check if home service is selected
+        const serviceLocation = document.getElementById('serviceLocation');
+        if (serviceLocation && serviceLocation.value === 'home') {
+            total = total * 2; // Double price for home service
+        }
+
         const payType = document.querySelector('input[name="paymentType"]:checked');
         if (payType) {
             if (payType.value === 'deposit30') {
@@ -276,26 +310,19 @@ function setupPaymentOptions() {
 // Handle Buy Now button clicks
 function handleBuyNowClick(e) {
     if (e.target.classList.contains('buy-now-btn')) {
-        currentOrderType = 'product';
-        showProductFields();
         const productName = e.target.getAttribute('data-product-name');
-        const productSelect = document.getElementById('orderProduct');
-        if (productSelect) {
-            // if select does not contain this option (e.g. page loaded with service URL)
-            let opt = Array.from(productSelect.options).find(o => o.value === productName);
-            if (!opt) {
-                opt = document.createElement('option');
-                opt.value = productName;
-                opt.textContent = productName;
-                opt.dataset.price = e.target.getAttribute('data-product-price') || '0';
-                productSelect.appendChild(opt);
-            }
-            productSelect.value = productName;
-            updateOrderPrice();
-            setTimeout(() => {
-                document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
+        const productPrice = e.target.getAttribute('data-product-price') || '0';
+        const productId = e.target.getAttribute('data-product-id');
+        
+        // Store product data in sessionStorage so it can be selected on the products page
+        sessionStorage.setItem('selectedProduct', JSON.stringify({
+            id: productId,
+            name: productName,
+            price: productPrice
+        }));
+        
+        // Redirect to products page with product type parameter
+        window.location.href = 'products.html?type=product#orderForm';
     }
 }
 
@@ -351,8 +378,17 @@ if (document.readyState === 'loading') {
         setupFilterButtons();
         populateOrderSelect();
         setupPaymentOptions();
+        
+        // Determine order type from URL parameter
+        currentOrderType = (window.location.search.indexOf('type=service') !== -1) ? 'service' : 'product';
+        if (currentOrderType === 'service') showServiceFields(); else showProductFields();
+        
+        // Select stored product if redirected from Buy Now
+        selectStoredProduct();
+        
         const orderProduct = document.getElementById('orderProduct');
         const orderQuantity = document.getElementById('orderQuantity');
+        const serviceLocation = document.getElementById('serviceLocation');
         if (orderProduct) orderProduct.addEventListener('change', () => {
             // determine type based on URL parameter
             currentOrderType = (window.location.search.indexOf('type=service') !== -1) ? 'service' : 'product';
@@ -360,6 +396,7 @@ if (document.readyState === 'loading') {
             updateOrderPrice();
         });
         if (orderQuantity) orderQuantity.addEventListener('input', updateOrderPrice);
+        if (serviceLocation) serviceLocation.addEventListener('change', updateOrderPrice);
         updateOrderPrice();
         handleQueryParams();
         new TestimonialSlider();
@@ -372,14 +409,24 @@ if (document.readyState === 'loading') {
     setupFilterButtons();
     populateOrderSelect();
     setupPaymentOptions();
+    
+    // Determine order type from URL parameter
+    currentOrderType = (window.location.search.indexOf('type=service') !== -1) ? 'service' : 'product';
+    if (currentOrderType === 'service') showServiceFields(); else showProductFields();
+    
+    // Select stored product if redirected from Buy Now
+    selectStoredProduct();
+    
     const orderProduct = document.getElementById('orderProduct');
     const orderQuantity = document.getElementById('orderQuantity');
+    const serviceLocation = document.getElementById('serviceLocation');
     if (orderProduct) orderProduct.addEventListener('change', () => {
         currentOrderType = (window.location.search.indexOf('type=service') !== -1) ? 'service' : 'product';
         if (currentOrderType === 'service') showServiceFields(); else showProductFields();
         updateOrderPrice();
     });
     if (orderQuantity) orderQuantity.addEventListener('input', updateOrderPrice);
+    if (serviceLocation) serviceLocation.addEventListener('change', updateOrderPrice);
     updateOrderPrice();
     handleQueryParams();
     new TestimonialSlider();
@@ -509,6 +556,7 @@ function payWithPaystack() {
         amount: totalAmount,
         appointmentDate: appointmentDate,
         appointmentTime: appointmentTime,
+        serviceLocation: currentOrderType === 'service' ? (document.getElementById('serviceLocation') ? document.getElementById('serviceLocation').value : 'salon') : '',
         notes: notes,
         paymentType: paymentType,
         reference: transactionRef
@@ -544,6 +592,10 @@ function payWithPaystack() {
                 formData.append('appointmentTime', appointmentTime);
                 formData.append('notes', notes);
                 formData.append('paymentType', paymentType);
+                const serviceLocation = document.getElementById('serviceLocation');
+                if (serviceLocation) {
+                    formData.append('serviceLocation', serviceLocation.value);
+                }
             }
             // optional address
             if (address) formData.append('address', address);

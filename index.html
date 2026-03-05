@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cocoglamworld - Premium cosmetics and professional spa services for your ultimate beauty experience. Luxurious treatments, quality products, and expert care.">
+    <meta name="keywords" content="beauty, spa, cosmetics, massage, facials, skincare, luxury">
+    <meta name="author" content="Cocoglamworld">
+    <meta property="og:title" content="Cocoglamworld - Premium Beauty & Spa Services">
+    <meta property="og:description" content="Experience luxury spa services and premium cosmetics designed to enhance your natural beauty and boost your confidence.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cocoglamworld.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cocoglamworld - Your Beauty Destination">
+    <meta name="twitter:description" content="Premium cosmetics and professional spa services in Abuja, Nigeria.">
+    <meta name="theme-color" content="#5a1a2c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="canonical" href="https://cocoglamworld.com">
     <title>Cocoglamworld - Premium Cosmetics & Spa Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -12,7 +25,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><img src="images/newestlogo.jgp-removebg-preview.png" alt="Cocoglamworld Logo"></a>
+            <a href="index.html" class="logo"><img src="images/mainlogo.jpg" alt="Cocoglamworld Logo"></a>
             <button class="nav-toggle" id="navToggle" aria-label="Open menu">
                 <span></span>
                 <span></span>
@@ -22,7 +35,7 @@
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="products.html#orderForm">Book Appointment</a></li>
+                <li><a href="products.html?type=service#orderForm">Book Appointment</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -42,7 +55,7 @@
     <section class="about" aria-label="About us section with background image of woman with natural beauty">
         <div class="about-split">
             <div class="about-image">
-                <img src="images/herobackground.jpg" alt="Woman with natural beauty" />
+                <img src="images/aboutbackground.jpg" alt="Woman with natural beauty" />
             </div>
             <div class="about-content">
                 <h2>About Us</h2>
@@ -97,7 +110,7 @@
                         <p>Rejuvenating facials designed to cleanse, hydrate, and revitalize your skin with our premium, natural ingredients.</p>
                     </div>
                     <div class="service-image">
-                        <img src="images/facialtreatment.jpg" alt="Facial treatment session" loading="lazy" />
+                        <img src="images/facialtreatment.jpg " alt="Professional facial treatment service" loading="lazy" />
                     </div>
                 </div>
                 <div class="service-block reverse">
@@ -106,7 +119,7 @@
                         <p>Luxurious spa treatments to relax muscles and refresh your mind, delivered by our experienced therapists.</p>
                     </div>
                     <div class="service-image">
-                        <img src="images/spatherapy.jpg" alt="Spa therapy environment" loading="lazy" />
+                        <img src="images/spatherapy.jpg" alt="Relaxing spa therapy experience" loading="lazy" />
                     </div>
                 </div>
                 <div class="service-block">
@@ -124,7 +137,7 @@
                         <p>Professional makeup services for events and special occasions, ensuring you look and feel your absolute best.</p>
                     </div>
                     <div class="service-image">
-                        <img src="images/Makeupapplicationservice.jpg" alt="Makeup application service" loading="lazy" />
+                        <img src="images/Makeupapplicationservice.jpg" alt="Professional makeup application service" loading="lazy" />
                     </div>
                 </div>
             </div>
@@ -186,7 +199,8 @@
             <h2>Stay Updated</h2>
             <p>Subscribe to our newsletter for exclusive offers, product launches, and beauty tips from our experts</p>
             <form  action="https://formspree.io/f/xqednlyq" method="post" class="newsletter-form" id="newsletterForm"> 
-                <input type="email" placeholder="Enter your email address" required>
+                <label for="newsletterEmail" style="display:none;">Email Address</label>
+                <input type="email" id="newsletterEmail" name="email" placeholder="Enter your email address" required aria-required="true" aria-label="Email address for newsletter subscription">
                 <button type="submit" class="btn btn-primary">Subscribe Now</button>
             </form>
         </div>
@@ -210,9 +224,9 @@
             <div class="footer-section">
                 <h4>Follow Us</h4>
                 <div class="social-links">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
                 </div>
             </div>
         </div>

@@ -1,13 +1,10 @@
-// Data for spa services
-// You can add a property `imageUrl` pointing to an image file in the
-// `images` folder (e.g. "images/services/swedish-massage.jpg").
-// If none is provided, a generic placeholder will be used.
+// Data for spa services with inclusive, professional imagery from Unsplash
 const servicesData = [
     // Massages
     {
         category: 'Massages',
         name: 'Swedish Massage',
-        imageUrl: 'images/services/swedish-massage.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1552821206-e4c7cb2b6d0a?w=800&q=80',
         price: 20000,
         description: 'Relaxing full body massage using long, gliding strokes.',
         duration: '60–90 minutes',
@@ -16,7 +13,7 @@ const servicesData = [
     {
         category: 'Massages',
         name: 'Deep Tissue Massage',
-        imageUrl: 'images/services/deep-tissue-massage.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1600606667660-fc92659c2b16?w=800&q=80',
         price: 25000,
         description: 'Focused pressure to relieve deep muscle tension.',
         duration: '60–90 minutes',
@@ -26,7 +23,7 @@ const servicesData = [
     {
         category: 'Nails',
         name: 'Manicure',
-        imageUrl: 'images/services/manicure.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80',
         price: 5000,
         description: 'Classic manicure to keep your hands neat and polished.',
         duration: '45–60 minutes',
@@ -35,7 +32,7 @@ const servicesData = [
     {
         category: 'Nails',
         name: 'Pedicure',
-        imageUrl: 'images/services/pedicure.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1604932160160-1c0e8fcdbf91?w=800&q=80',
         price: 10000,
         description: 'Soothing pedicure for soft and beautiful feet.',
         duration: '60–90 minutes',
@@ -44,7 +41,7 @@ const servicesData = [
     {
         category: 'Nails',
         name: 'Gel Polish + Fixing of Big Toes',
-        imageUrl: 'images/services/gel-polish-big-toes.jpg',
+        imageUrl: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80',
         price: 7500,
         description: 'Long-lasting gel polish with special big toe care.',
         duration: '60 minutes',
@@ -141,5 +138,68 @@ const servicesData = [
         description: 'Skincare treatment for the bikini area to soothe and smooth.',
         duration: '60 minutes',
         popular: true
+    },
+    {
+        category: 'Massages',
+        name: 'Aromatherapy Massage',
+        imageUrl: 'images/services/aromatherapy-massage.jpg',
+        price: 25000,
+        description: 'Therapeutic massage with essential oils to promote relaxation and wellness.',
+        duration: '60–90 minutes',
+        popular: false
+    },
+    {
+        category: 'Massages',
+        name: 'Hot Stone Massage',
+        imageUrl: 'images/services/hot-stone-massage.jpg',
+        price: 40000,
+        description: 'Therapeutic massage using heated stones to ease muscle tension and improve circulation.',
+        duration: '60–90 minutes',
+        popular: false
+    },
+    {
+        category: 'Massages',
+        name: 'Thai Massage',
+        imageUrl: 'images/services/thai-massage.jpg',
+        price: 40000,
+        description: 'Traditional Thai massage combining acupressure and yoga-like stretching for deep relaxation.',
+        duration: '60–90 minutes',
+        popular: false
+    },
+    {
+        category: 'Massages',
+        name: 'Yoni Massage',
+        imageUrl: 'images/services/yoni-massage.jpg',
+        price: 40000,
+        description: 'Specialized holistic massage for intimate wellness and rejuvenation.',
+        duration: '60–90 minutes',
+        popular: false
+    },
+    {
+        category: 'Nails',
+        name: 'Gel Pedicure',
+        imageUrl: 'images/services/gel-pedicure.jpg',
+        price: 15000,
+        description: 'Professional gel pedicure for long-lasting shine and beautiful nails.',
+        duration: '60–90 minutes',
+        popular: false
+    },
+    {
+        category: 'Facials',
+        name: 'Face Hair Tweezing',
+        imageUrl: 'images/services/face-hair-tweezing.jpg',
+        price: 10000,
+        description: 'Precise facial hair removal to maintain a smooth, polished complexion.',
+        duration: '30 minutes',
+        popular: false
+    },
+    {
+        category: 'Body Treatments',
+        name: 'Body Steaming',
+        imageUrl: 'images/services/body-steaming.jpg',
+        price: 15000,
+        description: 'Relaxing steam treatment to open pores and rejuvenate your entire body.',
+        duration: '45–60 minutes',
+        popular: false
     }
 ];
