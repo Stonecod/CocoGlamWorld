@@ -28,6 +28,7 @@ body {
     line-height: 1.6;
     font-weight: 400;
     overflow-x: hidden;
+    padding-top: 60px;
 }
 
 p {
@@ -45,10 +46,14 @@ p {
 /* Navigation Bar */
 .navbar {
     background-color: var(--primary-color);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    width: 100%;
+    overflow: visible;
 }
 
 .nav-container {
@@ -59,6 +64,8 @@ p {
     justify-content: space-between;
     align-items: center;
     height: 60px;
+    overflow: visible;
+    width: 100%;
 }
 
 .logo {
@@ -1464,9 +1471,10 @@ h4 {
     }
 
     .nav-menu {
-        position: absolute;
+        position: fixed;
         top: 60px;
         left: 0;
+        right: 0;
         width: 100%;
         background-color: var(--primary-color);
         flex-direction: column;
@@ -1478,11 +1486,13 @@ h4 {
         opacity: 0;
         transition: max-height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
         pointer-events: none;
+        z-index: 1001;
     }
 
     .nav-menu.active {
         display: flex;
-        max-height: 500px;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
         opacity: 1;
         pointer-events: auto;
     }

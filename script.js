@@ -144,13 +144,84 @@ function renderServices() {
         container.appendChild(section);
     });
 
-    // delegate booking click
+    // delegate booking click - scroll to service form
     container.addEventListener('click', function(e) {
         if (e.target.classList.contains('book-btn')) {
             const name = e.target.dataset.serviceName;
             const price = e.target.dataset.servicePrice;
-            window.location.href = `products.html?type=service&name=${encodeURIComponent(name)}&price=${price}#orderForm`;
+            const select = document.getElementById('serviceSelect');
+            if (select) {
+                select.value = name;
+                updateServicePrice();
+                document.getElementById('serviceOrderForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
+    });
+}
+
+// Populate service dropdown
+function populateServiceSelect() {
+    const select = document.getElementById('serviceSelect');
+    if (!select || !Array.isArray(servicesData)) return;
+    
+    servicesData.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.name;
+        option.textContent = `${service.name} - ₦${service.price.toLocaleString()}`;
+        option.dataset.price = service.price;
+        select.appendChild(option);
+    });
+}
+
+// Update price for service booking form
+function updateServicePrice() {
+    const serviceSelect = document.getElementById('serviceSelect');
+    const priceDisplay = document.getElementById('servicePriceDisplay');
+    const totalInput = document.getElementById('serviceTotalAmount');
+    const serviceLocation = document.getElementById('serviceLocation');
+    
+    if (!serviceSelect || !priceDisplay || !totalInput) return;
+    
+    const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+    const unitPrice = parseFloat(selectedOption.dataset.price) || 0;
+    let total = unitPrice;
+    
+    // Check if home service is selected
+    if (serviceLocation && serviceLocation.value === 'home') {
+        total = total * 2; // Double price for home service
+    }
+    
+    // Apply payment type discount
+    const payType = document.querySelector('input[name="paymentType"]:checked');
+    let displayLabel = 'Total';
+    if (payType) {
+        if (payType.value === 'deposit30') {
+            total = total * 0.3;
+            displayLabel = '30% Deposit';
+        } else if (payType.value === 'deposit50') {
+            total = total * 0.5;
+            displayLabel = '50% Deposit';
+        }
+    }
+    
+    priceDisplay.textContent = `${displayLabel}: ₦${total.toFixed(2)}`;
+    totalInput.value = total.toFixed(2);
+}
+
+// Setup listeners for service form
+function setupServiceFormListeners() {
+    const serviceSelect = document.getElementById('serviceSelect');
+    const serviceLocation = document.getElementById('serviceLocation');
+    const paymentRadios = document.querySelectorAll('input[name="paymentType"]');
+    
+    if (serviceSelect) {
+        serviceSelect.addEventListener('change', updateServicePrice);
+    }
+    if (serviceLocation) {
+        serviceLocation.addEventListener('change', updateServicePrice);
+    }
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', updateServicePrice);
     });
 }
 
@@ -400,8 +471,12 @@ if (document.readyState === 'loading') {
         updateOrderPrice();
         handleQueryParams();
         new TestimonialSlider();
-        // if on services page, render list
-        if (document.getElementById('servicesContainer')) renderServices();
+        // if on services page, render list and setup service form
+        if (document.getElementById('servicesContainer')) {
+            renderServices();
+            populateServiceSelect();
+            setupServiceFormListeners();
+        }
     });
 } else {
     renderProducts();
@@ -430,19 +505,29 @@ if (document.readyState === 'loading') {
     updateOrderPrice();
     handleQueryParams();
     new TestimonialSlider();
-    if (document.getElementById('servicesContainer')) renderServices();
+    if (document.getElementById('servicesContainer')) {
+        renderServices();
+        populateServiceSelect();
+        setupServiceFormListeners();
+    }
 }
-// Smooth scrolling for anchor links
+// Smooth scrolling for anchor links (only for same-page anchors)
 function enableSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            // Only handle same-page anchors (no protocol/domain, not starting with other page name)
+            const href = this.getAttribute('href');
+            const isExternalAnchor = href.includes('.html') || href.includes('://');
+            
+            if (!isExternalAnchor) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             }
         });
     });
@@ -451,9 +536,29 @@ function enableSmoothScroll() {
 enableSmoothScroll();
 
 // Newsletter Form Handling
-// The form action is configured to use Formspree, so no
-// a custom message before redirecting, you can add a listener
-// here, but avoid calling `preventDefault()`.
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const formspreeEndpoint = 'https://formspree.io/f/xqednlyq';
+        
+        fetch(formspreeEndpoint, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        }).then(() => {
+            // Clear the form
+            this.reset();
+            // Show success message
+            alert('Thank you for subscribing! Check your email for exclusive offers.');
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('There was an error. Please try again.');
+        });
+    });
+}
 
 // Lazy loading animation – setup observer once for dynamic cards
 let productsObserver = null;
@@ -482,6 +587,9 @@ function observeProductItem(item) {
 // ========================================
 
 function payWithPaystack() {
+    // Get the form element
+    const orderForm = document.getElementById('orderForm');
+    
     // Get form values
     const fullName = document.getElementById('fullName').value.trim();
     const email = document.getElementById('email').value.trim();
@@ -605,6 +713,139 @@ function payWithPaystack() {
                 body: formData,
                 mode: 'no-cors'
             }).finally(() => {
+                // Clear the form before redirecting
+                if (orderForm) orderForm.reset();
+                // Redirect whether or not the submission succeeded
+                window.location.replace('order-success.html');
+            });
+        }
+    });
+    
+    handler.openIframe();
+}
+
+// ========================================
+// SERVICE BOOKING PAYMENT
+// ========================================
+
+function payWithPaystackService() {
+    // Get the form element
+    const serviceOrderForm = document.getElementById('serviceOrderForm');
+    
+    // Get form values
+    const fullName = document.getElementById('serviceFullName').value.trim();
+    const email = document.getElementById('serviceEmail').value.trim();
+    const phone = document.getElementById('servicePhone').value.trim();
+    const serviceSelect = document.getElementById('serviceSelect');
+    const appointmentDate = document.getElementById('serviceAppointmentDate').value;
+    const appointmentTime = document.getElementById('serviceAppointmentTime').value;
+    const serviceLocation = document.getElementById('serviceLocation').value;
+    const notes = document.getElementById('serviceNotes').value.trim();
+    const totalAmountField = document.getElementById('serviceTotalAmount');
+
+    // Validation
+    if (!fullName) {
+        alert('Please enter your full name');
+        return;
+    }
+    
+    if (!email) {
+        alert('Please enter your email address');
+        return;
+    }
+    
+    if (!phone) {
+        alert('Please enter your phone number');
+        return;
+    }
+    
+    if (!serviceSelect.value) {
+        alert('Please select a service');
+        return;
+    }
+    
+    if (!appointmentDate) {
+        alert('Please select an appointment date');
+        return;
+    }
+    
+    if (!appointmentTime) {
+        alert('Please select an appointment time');
+        return;
+    }
+    
+    if (!serviceLocation) {
+        alert('Please select a service location');
+        return;
+    }
+    
+    let totalAmount = parseFloat(totalAmountField.value) || 0;
+    if (totalAmount <= 0) {
+        alert('Please select a valid service');
+        return;
+    }
+    
+    // Get payment type
+    const payTypeEl = document.querySelector('input[name="paymentType"]:checked');
+    const paymentType = payTypeEl ? payTypeEl.value : 'full';
+    
+    // Convert amount to kobo (Paystack uses kobo as smallest unit)
+    const amountInKobo = Math.round(totalAmount * 100);
+    
+    // Generate unique reference
+    const transactionRef = 'COCOGLAMWORLD_' + Math.floor((Math.random() * 1000000000) + 1);
+    
+    // Store order details in session storage for the success page
+    sessionStorage.setItem('orderData', JSON.stringify({
+        customer: fullName,
+        email: email,
+        phone: phone,
+        service: serviceSelect.value,
+        appointmentDate: appointmentDate,
+        appointmentTime: appointmentTime,
+        serviceLocation: serviceLocation,
+        notes: notes,
+        amount: totalAmount,
+        paymentType: paymentType,
+        reference: transactionRef,
+        type: 'service'
+    }));
+    
+    // Initialize Paystack payment
+    const handler = PaystackPop.setup({
+        key: 'pk_test_4786e2462c3ce32ea82d9f007b846ba2a861c602',
+        email: email,
+        amount: amountInKobo,
+        currency: 'NGN',
+        ref: transactionRef,
+        onClose: function() {
+            console.log('Transaction window closed');
+        },
+        onSuccess: function(response) {
+            console.log('Payment successful! Reference: ' + response.reference);
+            
+            // Send details to Formspree
+            const formspreeEndpoint = 'https://formspree.io/f/xqednlyq';
+            const formData = new FormData();
+            formData.append('name', fullName);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('service', serviceSelect.value);
+            formData.append('appointmentDate', appointmentDate);
+            formData.append('appointmentTime', appointmentTime);
+            formData.append('serviceLocation', serviceLocation);
+            formData.append('notes', notes);
+            formData.append('price', totalAmount);
+            formData.append('paymentType', paymentType);
+            formData.append('paymentReference', response.reference);
+
+            fetch(formspreeEndpoint, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            }).finally(() => {
+                // Clear the form before redirecting
+                if (serviceOrderForm) serviceOrderForm.reset();
                 // Redirect whether or not the submission succeeded
                 window.location.replace('order-success.html');
             });
