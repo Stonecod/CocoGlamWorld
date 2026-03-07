@@ -27,7 +27,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html" class="active">Products</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="services.html#serviceOrderForm">Book Appointment</a></li>
+                <li><a href="services.html">Book Appointment</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -51,74 +51,6 @@
                 <button class="filter-btn" data-filter="body">Body Care</button>
             </div>
             <div id="allProductsContainer" class="products-grid"></div>
-        </div>
-    </section>
-
-    <!-- Order Form with Paystack Payment -->
-    <section class="order-form">
-        <div class="container">
-            <h2>Place an Order</h2>
-            <p>Select a product and fill out the form below to proceed to payment.</p>
-            <form class="order-form-element" id="orderForm" action="https://formspree.io/f/xqednlyq" method="POST">
-                <div class="form-group">
-                    <label for="fullName">Full Name <span style="color: #d32f2f;">*</span></label>
-                    <input type="text" id="fullName" name="name" required minlength="3" pattern="[A-Za-z\s]+" title="Please enter your full name (letters and spaces only)" aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address <span style="color: #d32f2f;">*</span></label>
-                    <input type="email" id="email" name="email" required aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number <span style="color: #d32f2f;">*</span></label>
-                    <input type="tel" id="phone" name="phone" required pattern="[0-9+\-\s()]{7,}" title="Please enter a valid phone number (at least 7 digits)" aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="orderProduct">Product / Service <span style="color: #d32f2f;">*</span></label>
-                    <select name="item" id="orderProduct" required aria-required="true">
-                        <option value="">-- select an item or service --</option>
-                        <!-- options injected by JavaScript -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="orderQuantity">Quantity</label>
-                    <input type="number" id="orderQuantity" name="quantity" value="1" min="1" required>
-                </div>
-                <div class="form-group" id="paymentOptions" style="display:none;">
-                    <label>Payment Type</label><br>
-                    <label><input type="radio" name="paymentType" value="deposit30" checked> 30% deposit</label>
-                    <label style="margin-left:20px;"><input type="radio" name="paymentType" value="deposit50"> 50% deposit</label>
-                    <label style="margin-left:20px;"><input type="radio" name="paymentType" value="full"> Full payment</label>
-                </div>
-                <p id="priceDisplay" class="form-price">Price: ₦0</p>
-                <input type="hidden" id="totalAmount" name="price" value="0">
-                <div id="appointmentFields" style="display:none;">
-                    <div class="form-group">
-                        <label for="appointmentDate">Preferred Appointment Date</label>
-                        <input type="date" id="appointmentDate" name="appointmentDate">
-                    </div>
-                    <div class="form-group">
-                        <label for="appointmentTime">Preferred Appointment Time</label>
-                        <input type="time" id="appointmentTime" name="appointmentTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="serviceLocation">Service Location</label>
-                        <select id="serviceLocation" name="serviceLocation">
-                            <option value="salon">At Our Salon</option>
-                            <option value="home">At Your Home (Double Price)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="notes">Additional Notes</label>
-                        <textarea id="notes" name="notes" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="form-group" id="addressGroup">
-                    <label for="address">Delivery Address</label>
-                    <textarea id="address" name="address" rows="3" placeholder="Enter your complete delivery address" required></textarea>
-                </div>
-                <div id="orderFormError" class="form-error" role="alert" aria-live="polite"></div>
-                <button type="button" class="btn btn-primary" onclick="payWithPaystack()">Complete Payment</button>
-            </form>
         </div>
     </section>
 

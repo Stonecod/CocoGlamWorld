@@ -27,7 +27,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="services.html" class="active">Services</a></li>
-                <li><a href="#serviceOrderForm">Book Appointment</a></li>
+                <li><a href="services.html">Book Appointment</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -68,65 +68,6 @@
     <section class="services-listing">
         <div class="container" id="servicesContainer">
             <!-- service categories will be injected by JavaScript -->
-        </div>
-    </section>
-
-    <!-- Service Order Form -->
-    <section class="order-form">
-        <div class="container">
-            <h2>Book Your Appointment</h2>
-            <p>Select a service and fill out the form below to complete your booking.</p>
-            <form class="order-form-element" id="serviceOrderForm" action="https://formspree.io/f/xqednlyq" method="POST">
-                <div class="form-group">
-                    <label for="serviceFullName">Full Name <span style="color: #d32f2f;">*</span></label>
-                    <input type="text" id="serviceFullName" name="name" required minlength="3" pattern="[A-Za-z\s]+" title="Please enter your full name (letters and spaces only)" aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="serviceEmail">Email Address <span style="color: #d32f2f;">*</span></label>
-                    <input type="email" id="serviceEmail" name="email" required aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="servicePhone">Phone Number <span style="color: #d32f2f;">*</span></label>
-                    <input type="tel" id="servicePhone" name="phone" required pattern="[0-9+\-\s()]{7,}" title="Please enter a valid phone number (at least 7 digits)" aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="serviceSelect">Service <span style="color: #d32f2f;">*</span></label>
-                    <select name="service" id="serviceSelect" required aria-required="true">
-                        <option value="">-- select a service --</option>
-                        <!-- options will be injected by JavaScript -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="serviceAppointmentDate">Preferred Appointment Date <span style="color: #d32f2f;">*</span></label>
-                    <input type="date" id="serviceAppointmentDate" name="appointmentDate" required aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="serviceAppointmentTime">Preferred Appointment Time <span style="color: #d32f2f;">*</span></label>
-                    <input type="time" id="serviceAppointmentTime" name="appointmentTime" required aria-required="true">
-                </div>
-                <div class="form-group">
-                    <label for="serviceLocation">Service Location <span style="color: #d32f2f;">*</span></label>
-                    <select id="serviceLocation" name="serviceLocation" required aria-required="true">
-                        <option value="">-- select location --</option>
-                        <option value="salon">At Our Salon</option>
-                        <option value="home">At Your Home (Double Price)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Payment Type <span style="color: #d32f2f;">*</span></label><br>
-                    <label><input type="radio" name="paymentType" value="deposit30" checked> 30% Deposit</label>
-                    <label style="margin-left:20px;"><input type="radio" name="paymentType" value="deposit50"> 50% Deposit</label>
-                    <label style="margin-left:20px;"><input type="radio" name="paymentType" value="full"> Full Payment</label>
-                </div>
-                <p id="servicePriceDisplay" class="form-price">Price: ₦0</p>
-                <input type="hidden" id="serviceTotalAmount" name="price" value="0">
-                <div class="form-group">
-                    <label for="serviceNotes">Additional Notes / Special Requests</label>
-                    <textarea id="serviceNotes" name="notes" rows="3" placeholder="Tell us about any specific preferences or requirements"></textarea>
-                </div>
-                <div id="serviceFormError" class="form-error" role="alert" aria-live="polite"></div>
-                <button type="button" class="btn btn-primary" onclick="payWithPaystackService()">Complete Payment</button>
-            </form>
         </div>
     </section>
 

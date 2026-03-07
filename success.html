@@ -83,7 +83,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><img src="images/mainlogo.jpg" alt="Cocoglamworld Logo"></a>
+            <a href="index.html" class="logo"><img src="images/roundlogo-removebg-preview.png" alt="Cocoglamworld Logo"></a>
             <button class="nav-toggle" id="navToggle" aria-label="Open menu">
                 <span></span>
                 <span></span>
@@ -93,7 +93,6 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="services.html">Book Appointment</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -105,9 +104,9 @@
             <div class="success-icon">✓</div>
             <h1>Payment Successful!</h1>
             <p>Thank you for your order. Your payment has been processed successfully.</p>
-            <p>You will receive an email confirmation shortly with your order details and tracking information.</p>
+            <p>You will receive an email confirmation shortly with your order or booking details.</p>
             <div class="success-reference" id="successReference">
-                Order Reference: 
+                Order Reference:
             </div>
             <div id="successDetails" style="margin-top:20px; font-size:1rem; text-align:left; color:#fff;"></div>
             <p style="font-size: 0.95em; margin-top: 20px;">Keep this reference for your records.</p>
@@ -148,8 +147,8 @@
     </footer>
 
     <script>
-        // populate with sessionStorage data
-        document.addEventListener('DOMContentLoaded', function() {
+        // Populate with sessionStorage data (shared with existing order-success logic)
+        document.addEventListener('DOMContentLoaded', function () {
             const data = sessionStorage.getItem('orderData');
             if (!data) return;
             try {
@@ -167,12 +166,12 @@
                     if (obj.serviceLocation) html += `<p><strong>Location:</strong> ${obj.serviceLocation === 'home' ? 'At Your Home' : 'At Our Salon'}</p>`;
                     if (obj.notes) html += `<p><strong>Notes:</strong> ${obj.notes}</p>`;
                     if (obj.paymentType) {
-                    let friendly = obj.paymentType;
-                    if (friendly === 'deposit30') friendly = '30% deposit';
-                    else if (friendly === 'deposit50') friendly = '50% deposit';
-                    else if (friendly === 'full') friendly = 'Full payment';
-                    html += `<p><strong>Payment Type:</strong> ${friendly}</p>`;
-                }
+                        let friendly = obj.paymentType;
+                        if (friendly === 'deposit30') friendly = '30% deposit';
+                        else if (friendly === 'deposit50') friendly = '50% deposit';
+                        else if (friendly === 'full') friendly = 'Full payment';
+                        html += `<p><strong>Payment Type:</strong> ${friendly}</p>`;
+                    }
                     detailsEl.innerHTML = html;
                 }
             } catch (e) {
@@ -182,3 +181,4 @@
     </script>
 </body>
 </html>
+

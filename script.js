@@ -189,18 +189,21 @@ function renderServices() {
         container.appendChild(section);
     });
 
-    // delegate booking click - scroll to service form
+    // delegate booking click - redirect to unified checkout
     container.addEventListener('click', function(e) {
-        if (e.target.classList.contains('book-btn')) {
-            const name = e.target.dataset.serviceName;
-            const price = e.target.dataset.servicePrice;
-            const select = document.getElementById('serviceSelect');
-            if (select) {
-                select.value = name;
-                updateServicePrice();
-                document.getElementById('serviceOrderForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
+        if (!e.target.classList.contains('book-btn')) return;
+
+        const name = e.target.dataset.serviceName;
+        const price = e.target.dataset.servicePrice;
+        if (!name || !price) return;
+
+        const params = new URLSearchParams({
+            type: 'service',
+            name,
+            price
+        });
+
+        window.location.href = `checkout.html?${params.toString()}`;
     });
 }
 
@@ -270,35 +273,9 @@ function setupServiceFormListeners() {
     });
 }
 
-// check URL parameters when order page loads
+// Legacy URL parameter handler (no-op now that checkout is unified)
 function handleQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    const type = params.get('type');
-    const name = params.get('name');
-    const price = parseFloat(params.get('price')) || 0;
-    // If Book Appointment without specific service, go to services page
-    if (type === 'service' && !name) {
-        window.location.replace('services.html#serviceOrderForm');
-        return;
-    }
-    if (type === 'service' && name) {
-        currentOrderType = 'service';
-        // populate select with single option
-        populateOrderSelect([{name: name, price: price}]);
-        const productSelect = document.getElementById('orderProduct');
-        if (productSelect) {
-            productSelect.value = name;
-        }
-        // disable quantity
-        const qty = document.getElementById('orderQuantity');
-        if (qty) {
-            qty.value = 1;
-            qty.disabled = true;
-        }
-        // show service-specific UI
-        showServiceFields();
-        updateOrderPrice();
-    }
+    // Intentionally left blank to avoid legacy product/service URL coupling
 }
 
 function showServiceFields() {
@@ -430,21 +407,20 @@ function setupPaymentOptions() {
 
 // Handle Buy Now button clicks
 function handleBuyNowClick(e) {
-    if (e.target.classList.contains('buy-now-btn')) {
-        const productName = e.target.getAttribute('data-product-name');
-        const productPrice = e.target.getAttribute('data-product-price') || '0';
-        const productId = e.target.getAttribute('data-product-id');
-        
-        // Store product data in sessionStorage so it can be selected on the products page
-        sessionStorage.setItem('selectedProduct', JSON.stringify({
-            id: productId,
-            name: productName,
-            price: productPrice
-        }));
-        
-        // Redirect to products page with product type parameter
-        window.location.href = 'products.html?type=product#orderForm';
-    }
+    if (!e.target.classList.contains('buy-now-btn')) return;
+
+    const productName = e.target.getAttribute('data-product-name');
+    const productPrice = e.target.getAttribute('data-product-price') || '0';
+
+    if (!productName || !productPrice) return;
+
+    const params = new URLSearchParams({
+        type: 'product',
+        name: productName,
+        price: productPrice
+    });
+
+    window.location.href = `checkout.html?${params.toString()}`;
 }
 
 // Attach Buy Now handler when rendering products
@@ -507,6 +483,12 @@ if (document.readyState === 'loading') {
         // Select stored product if redirected from Buy Now
         selectStoredProduct();
         
+        // Enable Buy Now on featured products as well
+        const featuredContainer = document.getElementById('featuredContainer');
+        if (featuredContainer) {
+            featuredContainer.addEventListener('click', handleBuyNowClick);
+        }
+
         const orderProduct = document.getElementById('orderProduct');
         const orderQuantity = document.getElementById('orderQuantity');
         const serviceLocation = document.getElementById('serviceLocation');
@@ -547,6 +529,12 @@ if (document.readyState === 'loading') {
     // Select stored product if redirected from Buy Now
     selectStoredProduct();
     
+    // Enable Buy Now on featured products as well
+    const featuredContainer = document.getElementById('featuredContainer');
+    if (featuredContainer) {
+        featuredContainer.addEventListener('click', handleBuyNowClick);
+    }
+
     const orderProduct = document.getElementById('orderProduct');
     const orderQuantity = document.getElementById('orderQuantity');
     const serviceLocation = document.getElementById('serviceLocation');
