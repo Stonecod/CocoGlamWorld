@@ -93,6 +93,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="services.html">Services</a></li>
+                <li><a href="services.html#serviceOrderForm">Book Appointment</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -158,10 +159,12 @@
                 const detailsEl = document.getElementById('successDetails');
                 if (detailsEl) {
                     let html = '';
-                    if (obj.product) html += `<p><strong>Item:</strong> ${obj.product}</p>`;
+                    const item = obj.service || obj.product;
+                    if (item) html += `<p><strong>${obj.type === 'service' ? 'Service' : 'Item'}:</strong> ${item}</p>`;
                     if (obj.quantity) html += `<p><strong>Quantity:</strong> ${obj.quantity}</p>`;
                     if (obj.amount) html += `<p><strong>Amount Paid:</strong> ₦${parseFloat(obj.amount).toFixed(2)}</p>`;
                     if (obj.appointmentDate) html += `<p><strong>Appointment:</strong> ${obj.appointmentDate} ${obj.appointmentTime || ''}</p>`;
+                    if (obj.serviceLocation) html += `<p><strong>Location:</strong> ${obj.serviceLocation === 'home' ? 'At Your Home' : 'At Our Salon'}</p>`;
                     if (obj.notes) html += `<p><strong>Notes:</strong> ${obj.notes}</p>`;
                     if (obj.paymentType) {
                     let friendly = obj.paymentType;

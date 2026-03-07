@@ -27,7 +27,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="products.html#orderForm">Book Appointment</a></li>
+                <li><a href="services.html#serviceOrderForm">Book Appointment</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
         </div>
@@ -47,7 +47,7 @@
                 <!-- Contact Form -->
                 <div class="contact-form-container">
                     <h2>Send us a Message</h2>
-                    <form action="https://formspree.io/f/xqednlyq" method="POST" class="contact-form">
+                    <form id="contactForm" action="https://formspree.io/f/xqednlyq" method="POST" class="contact-form">
                         <div class="form-group">
                             <label for="contactName">Your Name <span style="color: #d32f2f;">*</span></label>
                             <input type="text" id="contactName" name="name" required minlength="3" pattern="[A-Za-z\s]+" title="Please enter your name (letters and spaces only)" aria-required="true">

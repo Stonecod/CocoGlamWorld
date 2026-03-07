@@ -27,6 +27,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html" class="active">Products</a></li>
                 <li><a href="services.html">Services</a></li>
+                <li><a href="services.html#serviceOrderForm">Book Appointment</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
@@ -115,6 +116,7 @@
                     <label for="address">Delivery Address</label>
                     <textarea id="address" name="address" rows="3" placeholder="Enter your complete delivery address" required></textarea>
                 </div>
+                <div id="orderFormError" class="form-error" role="alert" aria-live="polite"></div>
                 <button type="button" class="btn btn-primary" onclick="payWithPaystack()">Complete Payment</button>
             </form>
         </div>

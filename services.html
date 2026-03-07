@@ -124,6 +124,7 @@
                     <label for="serviceNotes">Additional Notes / Special Requests</label>
                     <textarea id="serviceNotes" name="notes" rows="3" placeholder="Tell us about any specific preferences or requirements"></textarea>
                 </div>
+                <div id="serviceFormError" class="form-error" role="alert" aria-live="polite"></div>
                 <button type="button" class="btn btn-primary" onclick="payWithPaystackService()">Complete Payment</button>
             </form>
         </div>
@@ -160,5 +161,6 @@
 
     <script src="services-data.js"></script>
     <script src="script.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 </body>
 </html>

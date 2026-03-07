@@ -5,6 +5,51 @@
 // global state for order type
 let currentOrderType = 'product';
 
+// ========================================
+// TOAST & FORM ERROR HELPERS
+// ========================================
+function ensureToastContainer() {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+    return container;
+}
+
+function showToast(message, type = 'success') {
+    const container = ensureToastContainer();
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-' + (type === 'error' ? 'error' : 'success');
+    toast.textContent = message;
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'opacity 0.3s, transform 0.3s';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+function showFormError(formId, message) {
+    const el = document.getElementById(formId);
+    if (el) {
+        el.textContent = message;
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+function clearFormError(formId) {
+    const el = document.getElementById(formId);
+    if (el) {
+        el.textContent = '';
+    }
+}
+
 // Mobile Navigation Toggle
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
@@ -231,6 +276,11 @@ function handleQueryParams() {
     const type = params.get('type');
     const name = params.get('name');
     const price = parseFloat(params.get('price')) || 0;
+    // If Book Appointment without specific service, go to services page
+    if (type === 'service' && !name) {
+        window.location.replace('services.html#serviceOrderForm');
+        return;
+    }
     if (type === 'service' && name) {
         currentOrderType = 'service';
         // populate select with single option
@@ -477,6 +527,11 @@ if (document.readyState === 'loading') {
             populateServiceSelect();
             setupServiceFormListeners();
         }
+        // Clear form errors when user edits
+        const orderFormEl = document.getElementById('orderForm');
+        if (orderFormEl) orderFormEl.addEventListener('input', () => clearFormError('orderFormError'));
+        const serviceFormEl = document.getElementById('serviceOrderForm');
+        if (serviceFormEl) serviceFormEl.addEventListener('input', () => clearFormError('serviceFormError'));
     });
 } else {
     renderProducts();
@@ -510,6 +565,10 @@ if (document.readyState === 'loading') {
         populateServiceSelect();
         setupServiceFormListeners();
     }
+    const orderFormEl = document.getElementById('orderForm');
+    if (orderFormEl) orderFormEl.addEventListener('input', () => clearFormError('orderFormError'));
+    const serviceFormEl = document.getElementById('serviceOrderForm');
+    if (serviceFormEl) serviceFormEl.addEventListener('input', () => clearFormError('serviceFormError'));
 }
 // Smooth scrolling for anchor links (only for same-page anchors)
 function enableSmoothScroll() {
@@ -549,13 +608,41 @@ if (newsletterForm) {
             body: formData,
             mode: 'no-cors'
         }).then(() => {
-            // Clear the form
             this.reset();
-            // Show success message
-            alert('Thank you for subscribing! Check your email for exclusive offers.');
+            showToast('Thank you for subscribing! Check your email for exclusive offers.', 'success');
         }).catch(error => {
             console.error('Error:', error);
-            alert('There was an error. Please try again.');
+            showToast('There was an error. Please try again.', 'error');
+        });
+    });
+}
+
+// Contact Form Handling (AJAX submit + toast feedback)
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+        }
+        fetch('https://formspree.io/f/xqednlyq', {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        }).then(() => {
+            this.reset();
+            showToast('Message sent! We\'ll get back to you soon.', 'success');
+        }).catch(err => {
+            console.error('Error:', err);
+            showToast('Something went wrong. Please try again or call us.', 'error');
+        }).finally(() => {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
         });
     });
 }
@@ -587,7 +674,7 @@ function observeProductItem(item) {
 // ========================================
 
 function payWithPaystack() {
-    // Get the form element
+    clearFormError('orderFormError');
     const orderForm = document.getElementById('orderForm');
     
     // Get form values
@@ -618,33 +705,40 @@ function payWithPaystack() {
     
     // Validation
     if (!email) {
-        alert('Please enter your email address');
+        showFormError('orderFormError', 'Please enter your email address.');
         return;
     }
-    
     if (!fullName) {
-        alert('Please enter your full name');
+        showFormError('orderFormError', 'Please enter your full name.');
         return;
     }
-    
     if (!phone) {
-        alert('Please enter your phone number');
+        showFormError('orderFormError', 'Please enter your phone number.');
         return;
     }
-    
     if (currentOrderType !== 'service' && !address) {
-        alert('Please enter your delivery address');
+        showFormError('orderFormError', 'Please enter your delivery address.');
         return;
     }
-    
     if (totalAmount <= 0) {
-        alert('Please select a valid product and quantity');
+        showFormError('orderFormError', 'Please select a valid product and quantity.');
         return;
     }
-    
     if (!productSelect.value) {
-        alert('Please select a product');
+        showFormError('orderFormError', 'Please select a product or service.');
         return;
+    }
+    if (currentOrderType === 'service') {
+        const apptDate = document.getElementById('appointmentDate') ? document.getElementById('appointmentDate').value : '';
+        const apptTime = document.getElementById('appointmentTime') ? document.getElementById('appointmentTime').value : '';
+        if (!apptDate) {
+            showFormError('orderFormError', 'Please select your preferred appointment date.');
+            return;
+        }
+        if (!apptTime) {
+            showFormError('orderFormError', 'Please select your preferred appointment time.');
+            return;
+        }
     }
     
     // Convert amount to kobo (Paystack uses kobo as smallest unit)
@@ -729,7 +823,7 @@ function payWithPaystack() {
 // ========================================
 
 function payWithPaystackService() {
-    // Get the form element
+    clearFormError('serviceFormError');
     const serviceOrderForm = document.getElementById('serviceOrderForm');
     
     // Get form values
@@ -745,43 +839,36 @@ function payWithPaystackService() {
 
     // Validation
     if (!fullName) {
-        alert('Please enter your full name');
+        showFormError('serviceFormError', 'Please enter your full name.');
         return;
     }
-    
     if (!email) {
-        alert('Please enter your email address');
+        showFormError('serviceFormError', 'Please enter your email address.');
         return;
     }
-    
     if (!phone) {
-        alert('Please enter your phone number');
+        showFormError('serviceFormError', 'Please enter your phone number.');
         return;
     }
-    
     if (!serviceSelect.value) {
-        alert('Please select a service');
+        showFormError('serviceFormError', 'Please select a service.');
         return;
     }
-    
     if (!appointmentDate) {
-        alert('Please select an appointment date');
+        showFormError('serviceFormError', 'Please select your preferred appointment date.');
         return;
     }
-    
     if (!appointmentTime) {
-        alert('Please select an appointment time');
+        showFormError('serviceFormError', 'Please select your preferred appointment time.');
         return;
     }
-    
     if (!serviceLocation) {
-        alert('Please select a service location');
+        showFormError('serviceFormError', 'Please select a service location (salon or home).');
         return;
     }
-    
     let totalAmount = parseFloat(totalAmountField.value) || 0;
     if (totalAmount <= 0) {
-        alert('Please select a valid service');
+        showFormError('serviceFormError', 'Please select a valid service.');
         return;
     }
     
