@@ -146,7 +146,7 @@ function createServiceCard(service) {
     // choose user‑provided image if available, otherwise fall back to placeholder
     const imgSrc = service.imageUrl ? service.imageUrl :
         `https://via.placeholder.com/400x200?text=${encodeURIComponent(service.name)}`;
-    inner += `<img src="${imgSrc}" alt="${service.name} - professional spa treatment">`;
+    inner += `<img src="${imgSrc}" alt="${service.name} - professional spa treatment" loading="lazy">`;
 
     if (service.popular) {
         inner += `<div class="service-badge">Most Popular</div>`;
