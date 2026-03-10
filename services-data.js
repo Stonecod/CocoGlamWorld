@@ -62,7 +62,7 @@ const servicesData = [
     {
         category: 'Facials',
         name: 'Acne Facial',
-        imageUrl: 'https://images.unsplash.com/photo-1596178065887-1198b6148b2b',
+        imageUrl: 'images/services/acnefacial.jpg',
         price: 15000,
         description: 'Targeted treatment to clear breakouts and calm irritation.',
         duration: '60 minutes',
@@ -89,7 +89,7 @@ const servicesData = [
     {
         category: 'Facials',
         name: 'Back Facial',
-        imageUrl: 'https://images.unsplash.com/photo-1591348278999-ee1e9c7d9c2f',
+        imageUrl: 'images/services/backfacial.jpg',
         price: 30000,
         description: 'Deep clean and exfoliate the back area for smooth skin.',
         duration: '60 minutes',
@@ -118,7 +118,7 @@ const servicesData = [
     {
         category: 'Body Treatments',
         name: 'Armpit Waxing',
-        imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9',
+        imageUrl: 'images/services/Armpitwaxing.jpg',
         price: 10000,
         description: 'Quick and clean underarm waxing session.',
         duration: '30 minutes',
@@ -194,7 +194,7 @@ const servicesData = [
     {
         category: 'Facials',
         name: 'Face Hair Tweezing',
-        imageUrl: 'https://images.unsplash.com/photo-1591348278999-ee1e9c7d9c2f',
+        imageUrl: 'images/services/facehairtweezing.jpg',
         price: 10000,
         description: 'Precise facial hair removal to maintain a smooth, polished complexion.',
         duration: '30 minutes',
@@ -203,7 +203,7 @@ const servicesData = [
     {
         category: 'Body Treatments',
         name: 'Body Steaming',
-        imageUrl: 'https://images.unsplash.com/photo-1590439471364-192aa70c0b53',
+        imageUrl: 'images/services/bodysteaming.jpg',
         price: 15000,
         description: 'Relaxing steam treatment to open pores and rejuvenate your entire body.',
         duration: '45–60 minutes',
