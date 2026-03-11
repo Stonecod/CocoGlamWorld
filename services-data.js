@@ -203,7 +203,7 @@ const servicesData = [
     {
         category: 'Body Treatments',
         name: 'Body Steaming',
-        imageUrl: 'images/services/bodysteaming.jpg',
+        imageUrl: 'images/services/Bodysteaming.jpg',
         price: 15000,
         description: 'Relaxing steam treatment to open pores and rejuvenate your entire body.',
         duration: '45–60 minutes',
