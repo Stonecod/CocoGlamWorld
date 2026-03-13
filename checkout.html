@@ -1,135 +1,247 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Secure checkout for Cocoglamworld beauty products and spa services.">
-    <meta name="keywords" content="checkout, payment, beauty products, spa services">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Secure checkout for Cocoglamworld beauty products and spa services."
+    />
+    <meta
+      name="keywords"
+      content="checkout, payment, beauty products, spa services"
+    />
     <title>Checkout - Cocoglamworld</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo"><img src="images/roundlogo-removebg-preview.png" alt="Cocoglamworld Logo"></a>
-            <button class="nav-toggle" id="navToggle" aria-label="Open menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
+      <div class="nav-container">
+        <a href="index.html" class="logo"
+          ><img
+            src="images/roundlogo-removebg-preview.png"
+            alt="Cocoglamworld Logo"
+        /></a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Page Header -->
-    <section class="page-header" aria-label="Checkout page header with luxury cosmetics background image">
-        <div class="container">
-            <h1>Checkout</h1>
-            <p>Confirm your item and securely complete your payment.</p>
-        </div>
+    <section
+      class="page-header"
+      aria-label="Checkout page header with luxury cosmetics background image"
+    >
+      <div class="container">
+        <h1>Checkout</h1>
+        <p>Confirm your item and securely complete your payment.</p>
+      </div>
     </section>
 
     <!-- Unified Checkout Section -->
     <section class="order-form">
-        <div class="container">
-            <h2>Order Summary</h2>
-            <p id="checkoutIntro">Please review your selection and enter your details to proceed.</p>
+      <div class="container">
+        <h2>Order Summary</h2>
+        <p id="checkoutIntro">
+          Please review your selection and enter your details to proceed.
+        </p>
 
-            <div class="order-form-element" style="max-width: 600px; margin-top: 30px;">
-                <!-- Item summary -->
-                <div class="form-group">
-                    <label>Selected Item</label>
-                    <div style="background: #fff; border-radius: 8px; padding: 15px; border: 1px solid #f0f0f0;">
-                        <p><strong>Type:</strong> <span id="selectedItemType">-</span></p>
-                        <p><strong>Name:</strong> <span id="selectedItemName">-</span></p>
-                        <p><strong>Price:</strong> <span id="selectedItemPrice">₦0</span></p>
-                    </div>
-                </div>
-
-                <!-- Unified checkout form -->
-                <form id="checkoutForm" action="https://formspree.io/f/xqednlyq" method="POST">
-                    <!-- Hidden fields required by spec -->
-                    <input type="hidden" name="item_name" id="itemName">
-                    <input type="hidden" name="item_price" id="itemPrice">
-                    <input type="hidden" name="payment_reference" id="paymentReference">
-                    <!-- Helpful extra metadata -->
-                    <input type="hidden" name="order_type" id="orderType">
-
-                    <div class="form-group">
-                        <label for="fullName">Full Name <span style="color:#d32f2f;">*</span></label>
-                        <input type="text" id="fullName" name="full_name" required minlength="3" aria-required="true">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email Address <span style="color:#d32f2f;">*</span></label>
-                        <input type="email" id="email" name="email" required aria-required="true">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone">Phone Number <span style="color:#d32f2f;">*</span></label>
-                        <input type="tel" id="phone" name="phone" required pattern="[0-9+\\-\\s()]{7,}" title="Please enter a valid phone number (at least 7 digits)" aria-required="true">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notes">Notes (Optional)</label>
-                        <textarea id="notes" name="notes" rows="3" placeholder="Add any extra information, e.g. preferred appointment time for services (optional)"></textarea>
-                    </div>
-
-                    <div id="checkoutError" class="form-error" role="alert" aria-live="polite"></div>
-
-                    <button type="button" id="payNowBtn" class="btn btn-primary">Pay Now</button>
-                </form>
+        <div
+          class="order-form-element"
+          style="max-width: 600px; margin-top: 30px"
+        >
+          <!-- Item summary -->
+          <div class="form-group">
+            <label>Selected Item</label>
+            <div
+              style="
+                background: #fff;
+                border-radius: 8px;
+                padding: 15px;
+                border: 1px solid #f0f0f0;
+              "
+            >
+              <p><strong>Type:</strong> <span id="selectedItemType">-</span></p>
+              <p><strong>Name:</strong> <span id="selectedItemName">-</span></p>
+              <p>
+                <strong>Price:</strong> <span id="selectedItemPrice">₦0</span>
+              </p>
             </div>
+          </div>
+
+          <!-- Unified checkout form -->
+          <form
+            id="checkoutForm"
+            action="https://formspree.io/f/xqednlyq"
+            method="POST"
+          >
+            <!-- Hidden fields required by spec -->
+            <input type="hidden" name="item_name" id="itemName" />
+            <input type="hidden" name="item_price" id="itemPrice" />
+            <input
+              type="hidden"
+              name="payment_reference"
+              id="paymentReference"
+            />
+            <!-- Helpful extra metadata -->
+            <input type="hidden" name="order_type" id="orderType" />
+
+            <div class="form-group">
+              <label for="fullName"
+                >Full Name <span style="color: #d32f2f">*</span></label
+              >
+              <input
+                type="text"
+                id="fullName"
+                name="full_name"
+                required
+                minlength="3"
+                aria-required="true"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email"
+                >Email Address <span style="color: #d32f2f">*</span></label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                aria-required="true"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="phone"
+                >Phone Number <span style="color: #d32f2f">*</span></label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                pattern="[0-9+\\-\\s()]{7,}"
+                title="Please enter a valid phone number (at least 7 digits)"
+                aria-required="true"
+              />
+            </div>
+
+            <!-- Delivery / Service Location -->
+            <div class="form-group" id="locationGroup">
+              <label for="locationOption">Select Option *</label>
+              <select id="locationOption" name="location_option">
+                <option value="">Choose option</option>
+              </select>
+            </div>
+
+            <!-- Address Field -->
+            <div class="form-group" id="addressGroup" style="display: none">
+              <label for="address" id="addressLabel">Address *</label>
+              <textarea
+                id="address"
+                name="address"
+                rows="3"
+                placeholder="Enter your address"
+              >
+              </textarea>
+            </div>
+
+            <!-- Extra Notes -->
+            <div class="form-group">
+              <label for="notes">Additional Notes (Optional)</label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows="3"
+                placeholder="Any extra information"
+              ></textarea>
+            </div>
+
+            <div
+              id="checkoutError"
+              class="form-error"
+              role="alert"
+              aria-live="polite"
+            ></div>
+
+            <button type="button" id="payNowBtn" class="btn btn-primary">
+              Pay Now
+            </button>
+          </form>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Cocoglamworld</h4>
-                <p>Your trusted beauty brand for premium cosmetics and spa services.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <p><a href="mailto:Olugbayio@gmail.com">Olugbayio@gmail.com</a></p>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Cocoglamworld</h4>
+          <p>
+            Your trusted beauty brand for premium cosmetics and spa services.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p><a href="mailto:Olugbayio@gmail.com">Olugbayio@gmail.com</a></p>
 
-                
-                <p>No. 4 lobito crescent<br>wuse 2, Abuja, Nigeria</p>
-            </div>
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <div class="social-links">
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-                </div>
-            </div>
+          <p>No. 4 lobito crescent<br />wuse 2, Abuja, Nigeria</p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Cocoglamworld. All Rights Reserved.</p>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="social-links">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Facebook</a
+            >
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instagram</a
+            >
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Twitter</a
+            >
+          </div>
         </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cocoglamworld. All Rights Reserved.</p>
+      </div>
     </footer>
 
     <script src="script.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="checkout.js"></script>
-</body>
+  </body>
 </html>
-
