@@ -92,6 +92,7 @@
             <!-- Hidden fields required by spec -->
             <input type="hidden" name="item_name" id="itemName" />
             <input type="hidden" name="item_price" id="itemPrice" />
+            <input type="hidden" name="quantity" id="itemQuantity" value="1" />
             <input
               type="hidden"
               name="payment_reference"
@@ -103,6 +104,19 @@
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_autoresponse" value="Thank you! We have received your message.">
+            <input type="hidden" name="_next" value="success.html">
+
+            <div class="form-group" id="quantityGroup" style="display: none;">
+              <label for="quantity">Quantity</label>
+              <input
+                type="number"
+                id="quantity"
+                name="quantity_visible"
+                min="1"
+                value="1"
+                step="1"
+              />
+            </div>
 
             <div class="form-group">
               <label for="fullName"

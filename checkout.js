@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const itemPriceEl = document.getElementById('selectedItemPrice');
     const itemNameInput = document.getElementById('itemName');
     const itemPriceInput = document.getElementById('itemPrice');
+    const itemQuantityInput = document.getElementById('itemQuantity');
+    const quantityGroup = document.getElementById('quantityGroup');
+    const quantityInput = document.getElementById('quantity');
     const orderTypeInput = document.getElementById('orderType');
     const errorEl = document.getElementById('checkoutError');
     const form = document.getElementById('checkoutForm');
@@ -29,6 +32,49 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!errorEl) return;
         errorEl.textContent = msg;
         errorEl.style.display = msg ? 'block' : 'none';
+    }
+
+    function clearVisibleFormFields() {
+        const fieldsToClear = ['fullName', 'email', 'phone', 'notes'];
+
+        fieldsToClear.forEach((id) => {
+            const field = document.getElementById(id);
+            if (field) field.value = '';
+        });
+
+        if (locationOption) {
+            locationOption.value = '';
+        }
+
+        if (quantityInput) {
+            quantityInput.value = '1';
+        }
+
+        if (addressField) {
+            addressField.value = '';
+            addressField.required = false;
+        }
+
+        if (addressGroup) {
+            addressGroup.style.display = 'none';
+        }
+    }
+
+    function updatePriceDisplay(quantity = 1) {
+        const qty = Math.max(1, Number(quantity) || 1);
+        const totalPrice = price * qty;
+
+        if (itemPriceEl) {
+            itemPriceEl.textContent = `₦${totalPrice.toFixed(2)}`;
+        }
+
+        if (itemPriceInput) {
+            itemPriceInput.value = totalPrice.toFixed(2);
+        }
+
+        if (itemQuantityInput) {
+            itemQuantityInput.value = qty;
+        }
     }
 
     // Validate URL parameters
@@ -56,8 +102,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Populate hidden inputs
     if (itemNameInput) itemNameInput.value = name;
-    if (itemPriceInput) itemPriceInput.value = price.toFixed(2);
     if (orderTypeInput) orderTypeInput.value = type;
+
+    if (type === 'product') {
+        if (quantityGroup) quantityGroup.style.display = 'block';
+        updatePriceDisplay(1);
+    } else {
+        if (quantityGroup) quantityGroup.style.display = 'none';
+        updatePriceDisplay(1);
+    }
+
+    if (quantityInput) {
+        quantityInput.addEventListener('input', function () {
+            const value = parseInt(this.value, 10);
+            if (isNaN(value) || value < 1) {
+                this.value = '1';
+            }
+            updatePriceDisplay(this.value);
+        });
+    }
 
     // ========================================
     // DELIVERY / SERVICE LOCATION LOGIC
@@ -117,9 +180,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (form) {
 
         form.addEventListener('submit', function () {
-            setTimeout(() => {
-                window.location.replace('success.html');
-            }, 1000);
+            clearVisibleFormFields();
+            showError('');
         });
 
     }
@@ -218,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 if (form) {
+                    clearVisibleFormFields();
                     form.submit();
                 }
 
