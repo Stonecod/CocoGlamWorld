@@ -50,6 +50,24 @@ function clearFormError(formId) {
     }
 }
 
+function showSuccessMessage(form, message) {
+    let msg = form.querySelector('.form-success');
+
+    if (!msg) {
+        msg = document.createElement('div');
+        msg.className = 'form-success';
+        msg.style.color = 'green';
+        msg.style.marginTop = '10px';
+        form.appendChild(msg);
+    }
+
+    msg.textContent = message;
+
+    setTimeout(() => {
+        msg.textContent = '';
+    }, 4000);
+}
+
 // Mobile Navigation Toggle
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
@@ -585,53 +603,44 @@ enableSmoothScroll();
 // Newsletter Form Handling
 const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
+    newsletterForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
+
         const formData = new FormData(this);
-        const formspreeEndpoint = 'https://formspree.io/f/xqednlyq';
-        
-        fetch(formspreeEndpoint, {
-            method: 'POST',
+
+        await fetch(this.action, {
+            method: "POST",
             body: formData,
-            mode: 'no-cors'
-        }).then(() => {
-            this.reset();
-            showToast('Thank you for subscribing! Check your email for exclusive offers.', 'success');
-        }).catch(error => {
-            console.error('Error:', error);
-            showToast('There was an error. Please try again.', 'error');
+            headers: {
+                'Accept': 'application/json'
+            }
         });
+
+        this.reset();
+
+        showSuccessMessage(this, "Thank you for subscribing!");
     });
 }
 
 // Contact Form Handling (AJAX submit + toast feedback)
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
+
         const formData = new FormData(this);
-        const submitBtn = this.querySelector('button[type="submit"]');
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-        }
-        fetch('https://formspree.io/f/xqednlyq', {
-            method: 'POST',
+
+        await fetch(this.action, {
+            method: "POST",
             body: formData,
-            mode: 'no-cors'
-        }).then(() => {
-            this.reset();
-            showToast('Message sent! We\'ll get back to you soon.', 'success');
-        }).catch(err => {
-            console.error('Error:', err);
-            showToast('Something went wrong. Please try again or call us.', 'error');
-        }).finally(() => {
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
+            headers: {
+                'Accept': 'application/json'
             }
         });
+
+        this.reset();
+
+        showSuccessMessage(this, "Message sent successfully!");
     });
 }
 

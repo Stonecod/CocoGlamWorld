@@ -111,27 +111,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ========================================
-    // FORM SUBMISSION TO FORMSPREE
+    // FORM SUBMISSION TO FORMSUBMIT
     // ========================================
 
     if (form) {
 
-        form.addEventListener('submit', function (e) {
-
-            e.preventDefault();
-
-            const formData = new FormData(form);
-
-            fetch('https://formspree.io/f/xqednlyq', {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            }).finally(function () {
-
+        form.addEventListener('submit', function () {
+            setTimeout(() => {
                 window.location.replace('success.html');
-
-            });
-
+            }, 1000);
         });
 
     }
