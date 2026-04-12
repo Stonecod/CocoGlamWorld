@@ -156,3 +156,7 @@ const productsData = [
 
 // FEATURED PRODUCTS FOR HOMEPAGE (displays first 2 lips products)
 const featuredProducts = productsData.filter(p => p.category === 'lips').slice(0, 2);
+
+// Expose data globally for legacy script usage
+window.productsData = productsData;
+window.featuredProducts = featuredProducts;

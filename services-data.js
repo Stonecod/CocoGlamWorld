@@ -210,3 +210,6 @@ const servicesData = [
         popular: false
     }
 ];
+
+// Expose data globally for legacy script usage
+window.servicesData = servicesData;

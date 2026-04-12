@@ -4,28 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Cocoglamworld - Premium cosmetics and professional spa services for your ultimate beauty experience. Luxurious treatments, quality products, and expert care.">
-    <meta name="keywords" content="beauty, spa, cosmetics, massage, facials, skincare, luxury">
+    <meta name="keywords" content="beauty, spa, cosmetics, massage, facials, skincare, luxury, Abuja">
     <meta name="author" content="Cocoglamworld">
     <meta property="og:title" content="Cocoglamworld - Premium Beauty & Spa Services">
     <meta property="og:description" content="Experience luxury spa services and premium cosmetics designed to enhance your natural beauty and boost your confidence.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cocoglamworld.com">
+    <meta property="og:url" content="https://stonecod.github.io/CocoGlamWorld/">
+    <meta property="og:image" content="https://stonecod.github.io/CocoGlamWorld/images/herobackground.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Cocoglamworld - Your Beauty Destination">
     <meta name="twitter:description" content="Premium cosmetics and professional spa services in Abuja, Nigeria.">
+    <meta name="twitter:image" content="https://stonecod.github.io/CocoGlamWorld/images/herobackground.jpg">
     <meta name="theme-color" content="#5a1a2c">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="canonical" href="https://cocoglamworld.com">
+    <link rel="canonical" href="https://stonecod.github.io/CocoGlamWorld/">
     <title>Cocoglamworld - Premium Cosmetics & Spa Services</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar">
+    <nav class="navbar" id="mainNav">
         <div class="nav-container">
-            <a href="index.html" class="logo"><img src="images/roundlogo-removebg-preview.png" alt="Cocoglamworld Logo"></a>
+            <a href="index.html" class="logo">
+                <img src="images/roundlogo-removebg-preview.png" alt="Cocoglamworld Logo">
+            </a>
             <button class="nav-toggle" id="navToggle" aria-label="Open menu">
                 <span></span>
                 <span></span>
@@ -35,35 +41,37 @@
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="checkout.html">Book Appointment</a></li>
+                <li><a href="checkout.html" class="nav-cta">Book Appointment</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" aria-label="Hero section featuring luxury cosmetics and beauty products flat lay with soft pastel background">
+    <section class="hero" aria-label="Hero — premium beauty and spa experience">
         <div class="hero-content">
             <h1>Welcome to Cocoglamworld</h1>
             <p class="tagline">Your Smile is Our Goal...</p>
-            <p class="hero-subtitle">Premium cosmetics & relaxing spa services for your ultimate beauty experience</p>
+            <p class="hero-subtitle">Premium cosmetics &amp; relaxing spa services for your ultimate beauty experience</p>
             <a href="products.html" class="btn btn-primary">Shop Now</a>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="about" aria-label="About us section with background image of woman with natural beauty">
+    <section class="about" aria-label="About Cocoglamworld">
         <div class="about-split">
-            <div class="about-image">
-                <img src="images/aboutbackground.jpg" alt="Woman with natural beauty" />
+            <div class="about-image reveal-left">
+                <img src="images/aboutbackground.jpg" alt="Woman with natural beauty" loading="lazy" />
             </div>
-            <div class="about-content">
+            <div class="about-content reveal-right">
                 <h2>About Us</h2>
                 <p>
-                    Cocoglamworld is a premium beauty brand dedicated to enhancing your natural beauty and elevating your confidence. 
-                    We offer meticulously crafted cosmetics and provide luxurious spa services designed to ensure you feel pampered, 
-                    rejuvenated, and utterly radiant. Our mission is to help you discover your best self through quality products and 
-                    professional expertise that exceeds expectations.
+                    Cocoglamworld is a premium beauty brand dedicated to enhancing your natural beauty and elevating your confidence.
+                    We offer meticulously crafted cosmetics and provide luxurious spa services designed to ensure you feel pampered,
+                    rejuvenated, and utterly radiant.
+                </p>
+                <p>
+                    Our mission is to help you discover your best self through quality products and professional expertise that exceeds expectations.
                 </p>
                 <a href="products.html" class="btn btn-primary">Explore Our Products</a>
             </div>
@@ -73,24 +81,24 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2>Why Choose Us</h2>
+            <h2 class="reveal">Why Choose Us</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card reveal reveal-delay-1">
                     <img src="images/Premiumbeautycosmetics.jpg" alt="Premium beauty products" loading="lazy" />
                     <h3>✓ Premium Quality</h3>
                     <p>High-quality cosmetics crafted with the finest ingredients for guaranteed satisfaction</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card reveal reveal-delay-2">
                     <img src="images/Expertbeautycaresession.jpg" alt="Expert beauty care session" loading="lazy" />
                     <h3>✓ Expert Care</h3>
                     <p>Professional spa treatments delivered by experienced therapists with years of expertise</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card reveal reveal-delay-3">
                     <img src="images/Naturalskincareingredients.jpg" alt="Natural skincare ingredients" loading="lazy" />
                     <h3>✓ Natural Ingredients</h3>
                     <p>Skincare solutions with natural and safe ingredients, cruelty-free and dermatologically tested</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card reveal reveal-delay-4">
                     <img src="images/Happycustomerconsultation.jpg" alt="Happy customer consultation" loading="lazy" />
                     <h3>✓ Customer Care</h3>
                     <p>Personalized service and 24/7 support for every customer's unique beauty journey</p>
@@ -102,39 +110,43 @@
     <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
-            <h2>Our Services</h2>
+            <h2 class="reveal">Our Services</h2>
             <div class="services-flow">
-                <div class="service-block">
+                <div class="service-block reveal">
                     <div class="service-content">
                         <h3>Facial Treatments</h3>
                         <p>Rejuvenating facials designed to cleanse, hydrate, and revitalize your skin with our premium, natural ingredients.</p>
+                        <a href="services.html" class="btn btn-secondary">Learn More</a>
                     </div>
                     <div class="service-image">
-                        <img src="images/facialtreatment.jpg " alt="Professional facial treatment service" loading="lazy" />
+                        <img src="images/facialtreatment.jpg" alt="Professional facial treatment service" loading="lazy" />
                     </div>
                 </div>
-                <div class="service-block reverse">
+                <div class="service-block reverse reveal">
                     <div class="service-content">
                         <h3>Spa Therapy</h3>
                         <p>Luxurious spa treatments to relax muscles and refresh your mind, delivered by our experienced therapists.</p>
+                        <a href="services.html" class="btn btn-secondary">Learn More</a>
                     </div>
                     <div class="service-image">
                         <img src="images/spatherapy.jpg" alt="Relaxing spa therapy experience" loading="lazy" />
                     </div>
                 </div>
-                <div class="service-block">
+                <div class="service-block reveal">
                     <div class="service-content">
                         <h3>Beauty Consultation</h3>
                         <p>Expert advice on choosing the right products for your skin type, personalized to your unique beauty journey.</p>
+                        <a href="services.html" class="btn btn-secondary">Learn More</a>
                     </div>
                     <div class="service-image">
                         <img src="images/Happycustomerconsultation.jpg" alt="Beauty consultation session" loading="lazy" />
                     </div>
                 </div>
-                <div class="service-block reverse">
+                <div class="service-block reverse reveal">
                     <div class="service-content">
                         <h3>Makeup Application</h3>
                         <p>Professional makeup services for events and special occasions, ensuring you look and feel your absolute best.</p>
+                        <a href="services.html" class="btn btn-secondary">Learn More</a>
                     </div>
                     <div class="service-image">
                         <img src="images/Makeupapplicationservice.jpg" alt="Professional makeup application service" loading="lazy" />
@@ -144,14 +156,24 @@
         </div>
     </section>
 
-    <!-- Products Preview Section -->
+    <!-- Featured Products Section -->
     <section class="products-preview">
         <div class="container">
-            <h2>Featured Products</h2>
+            <h2 class="reveal">Featured Products</h2>
             <div id="featuredContainer" class="products-grid">
-                <!-- featured items injected by JavaScript -->
+                <!-- Skeleton loaders shown until JS populates -->
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text medium"></div>
+                    <div class="skeleton-text short"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text medium"></div>
+                    <div class="skeleton-text short"></div>
+                </div>
             </div>
-            <div class="text-center">
+            <div class="text-center reveal">
                 <a href="products.html" class="btn btn-secondary">View All Products</a>
             </div>
         </div>
@@ -160,7 +182,7 @@
     <!-- Testimonials Section -->
     <section class="testimonials">
         <div class="container">
-            <h2>What Our Customers Say</h2>
+            <h2 class="reveal">What Our Customers Say</h2>
             <div class="testimonial-slider">
                 <div class="testimonial-slide active">
                     <blockquote>
@@ -181,13 +203,13 @@
                     </blockquote>
                 </div>
                 <div class="slider-controls">
-                    <button class="slider-btn prev" aria-label="Previous testimonial">‹</button>
+                    <button class="slider-btn prev" aria-label="Previous testimonial">&#8249;</button>
                     <div class="slider-dots">
                         <span class="dot active" data-slide="0"></span>
                         <span class="dot" data-slide="1"></span>
                         <span class="dot" data-slide="2"></span>
                     </div>
-                    <button class="slider-btn next" aria-label="Next testimonial">›</button>
+                    <button class="slider-btn next" aria-label="Next testimonial">&#8250;</button>
                 </div>
             </div>
         </div>
@@ -196,16 +218,16 @@
     <!-- Newsletter Section -->
     <section class="newsletter">
         <div class="container">
-            <h2>Stay Updated</h2>
-            <p>Subscribe to our newsletter for exclusive offers, product launches, and beauty tips from our experts</p>
-            <form  action="https://formsubmit.co/Olugbayiphilip923@gmail.com" method="post" class="newsletter-form" id="newsletterForm"> 
-                <input type="hidden" name="_subject" value="New Submission - CocoGlamWorld">
+            <h2 class="reveal">Stay Updated</h2>
+            <p class="reveal">Subscribe for exclusive offers, product launches, and beauty tips from our experts</p>
+            <form action="https://formsubmit.co/olugbayio@gmail.com" method="post" class="newsletter-form reveal" id="newsletterForm">
+                <input type="hidden" name="_subject" value="New Newsletter Signup - CocoGlamWorld">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_autoresponse" value="Thank you! We have received your message.">
+                <input type="hidden" name="_autoresponse" value="Thank you for subscribing! You'll be the first to hear about our exclusive offers and beauty tips.">
                 <label for="newsletterEmail" style="display:none;">Email Address</label>
                 <input type="email" id="newsletterEmail" name="email" placeholder="Enter your email address" required aria-required="true" aria-label="Email address for newsletter subscription">
-                <button type="submit" class="btn btn-primary">Subscribe Now</button>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
             </form>
         </div>
     </section>
@@ -215,28 +237,30 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Cocoglamworld</h4>
-                <p>Your trusted beauty brand for premium cosmetics and spa services.</p>
+                <p>Your trusted beauty brand for premium cosmetics and spa services in Abuja, Nigeria.</p>
             </div>
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="products.html">Products</a></li>
+                    <li><a href="services.html">Services</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
-           
             <div class="footer-section">
-                <h4>Address</h4>
-                <p><a href="mailto:Olugbayio@gmail.com">Olugbayio@gmail.com</a></p>
-                <p>No. 4 lobito crescent<br>wuse 2, Abuja, Nigeria</p>
+                <h4>Contact Us</h4>
+                <p><a href="mailto:olugbayio@gmail.com">olugbayio@gmail.com</a></p>
+                <p>No. 4 Lobito Crescent<br>Wuse 2, Abuja, Nigeria</p>
+                <p style="margin-top:8px;"><a href="tel:+2348142774187">+234 814 277 4187</a></p>
             </div>
             <div class="footer-section">
                 <h4>Follow Us</h4>
                 <div class="social-links">
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">X</a>
+                    <a href="https://wa.me/2348142774187" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a>
                 </div>
             </div>
         </div>
@@ -244,6 +268,25 @@
             <p>&copy; 2026 Cocoglamworld. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <a href="https://wa.me/2348142774187" class="fab fab-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span>WhatsApp</span>
+        </a>
+        <a href="checkout.html" class="fab fab-book" aria-label="Book Appointment">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Book Now</span>
+        </a>
+    </div>
 
     <script src="products-data.js"></script>
     <script src="script.js"></script>
