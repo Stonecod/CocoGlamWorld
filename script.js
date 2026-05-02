@@ -171,7 +171,7 @@ function createProductCard(product) {
         if (product.benefits && product.benefits.length > 0) {
             inner += `<p class="product-benefits">` + product.benefits.map(b => `✓ ${b}`).join(' &nbsp;') + `</p>`;
         }
-        inner += `<button class="btn btn-primary buy-now-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price || 0}">Buy Now</button>`;
+        inner += `<button class="btn btn-primary buy-now-btn request-product-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price || 0}">Request Product</button>`;
     }
 
     card.innerHTML = inner;
@@ -300,12 +300,13 @@ function renderFeatured() {
 // BUY NOW HANDLER
 // ========================================
 function handleBuyNowClick(e) {
-    if (!e.target.classList.contains('buy-now-btn')) return;
+    if (!e.target.classList.contains('buy-now-btn') && !e.target.classList.contains('request-product-btn')) return;
     const name = e.target.getAttribute('data-product-name');
-    const price = e.target.getAttribute('data-product-price') || '0';
-    if (!name || !price) return;
-    const params = new URLSearchParams({ type: 'product', name, price });
-    window.location.href = `checkout.html?${params.toString()}`;
+    if (!name) return;
+    const quantity = 1;
+    const message = `Hello Coco Glam World, I want to request this product:\nProduct Name: ${name}\nQuantity: ${quantity}`;
+    const url = `https://wa.me/2348142774187?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
 }
 
 // ========================================
@@ -633,104 +634,6 @@ function setupPaymentOptions() {
     document.querySelectorAll('input[name="paymentType"]').forEach(r => {
         r.addEventListener('change', updateOrderPrice);
     });
-}
-
-// ========================================
-// PAYSTACK (full payment - legacy order form)
-// ========================================
-function payWithPaystack() {
-    clearFormError('orderFormError');
-    const orderForm = document.getElementById('orderForm');
-    const fullName = (document.getElementById('fullName') || {}).value?.trim() || '';
-    const email = (document.getElementById('email') || {}).value?.trim() || '';
-    const phone = (document.getElementById('phone') || {}).value?.trim() || '';
-    const addressField = document.getElementById('address');
-    const address = addressField ? addressField.value.trim() : '';
-    const totalAmountField = document.getElementById('totalAmount');
-    const productSelect = document.getElementById('orderProduct');
-    const quantityField = document.getElementById('orderQuantity');
-    const appointmentDate = document.getElementById('appointmentDate') ? document.getElementById('appointmentDate').value : '';
-    const appointmentTime = document.getElementById('appointmentTime') ? document.getElementById('appointmentTime').value : '';
-    const notes = document.getElementById('notes') ? document.getElementById('notes').value.trim() : '';
-    let totalAmount = parseFloat(totalAmountField.value) || 0;
-    let paymentType = 'full';
-    if (currentOrderType === 'service') {
-        const payTypeEl = document.querySelector('input[name="paymentType"]:checked');
-        if (payTypeEl) paymentType = payTypeEl.value;
-    }
-    if (!email) { showFormError('orderFormError', 'Please enter your email address.'); return; }
-    if (!fullName) { showFormError('orderFormError', 'Please enter your full name.'); return; }
-    if (!phone) { showFormError('orderFormError', 'Please enter your phone number.'); return; }
-    if (currentOrderType !== 'service' && !address) { showFormError('orderFormError', 'Please enter your delivery address.'); return; }
-    if (totalAmount <= 0) { showFormError('orderFormError', 'Please select a valid product and quantity.'); return; }
-    if (!productSelect.value) { showFormError('orderFormError', 'Please select a product or service.'); return; }
-    if (currentOrderType === 'service') {
-        if (!appointmentDate) { showFormError('orderFormError', 'Please select your preferred appointment date.'); return; }
-        if (!appointmentTime) { showFormError('orderFormError', 'Please select your preferred appointment time.'); return; }
-    }
-    const amountInKobo = Math.round(totalAmount * 100);
-    const transactionRef = 'COCOGLAMWORLD_' + Math.floor((Math.random() * 1000000000) + 1);
-    sessionStorage.setItem('orderData', JSON.stringify({ customer: fullName, email, phone, address, product: productSelect.value, quantity: quantityField.value, amount: totalAmount, appointmentDate, appointmentTime, serviceLocation: currentOrderType === 'service' ? (document.getElementById('serviceLocation') ? document.getElementById('serviceLocation').value : 'salon') : '', notes, paymentType, reference: transactionRef }));
-    const handler = PaystackPop.setup({
-        key: 'pk_test_4786e2462c3ce32ea82d9f007b846ba2a861c602',
-        email, amount: amountInKobo, currency: 'NGN', ref: transactionRef,
-        onClose: function() { console.log('Transaction window closed'); },
-        onSuccess: function(response) {
-            const formspreeEndpoint = 'https://formspree.io/f/xqednlyq';
-            const formData = new FormData();
-            formData.append('name', fullName); formData.append('email', email); formData.append('phone', phone);
-            formData.append('item', productSelect.value); formData.append('price', totalAmount);
-            formData.append('quantity', quantityField.value); formData.append('paymentReference', response.reference);
-            if (currentOrderType === 'service') { formData.append('appointmentDate', appointmentDate); formData.append('appointmentTime', appointmentTime); formData.append('notes', notes); formData.append('paymentType', paymentType); const sl = document.getElementById('serviceLocation'); if (sl) formData.append('serviceLocation', sl.value); }
-            if (address) formData.append('address', address);
-            fetch(formspreeEndpoint, { method: 'POST', body: formData, mode: 'no-cors' }).finally(() => { if (orderForm) orderForm.reset(); window.location.replace('order-success.html'); });
-        }
-    });
-    handler.openIframe();
-}
-
-// ========================================
-// PAYSTACK (service booking - legacy)
-// ========================================
-function payWithPaystackService() {
-    clearFormError('serviceFormError');
-    const serviceOrderForm = document.getElementById('serviceOrderForm');
-    const fullName = document.getElementById('serviceFullName').value.trim();
-    const email = document.getElementById('serviceEmail').value.trim();
-    const phone = document.getElementById('servicePhone').value.trim();
-    const serviceSelect = document.getElementById('serviceSelect');
-    const appointmentDate = document.getElementById('serviceAppointmentDate').value;
-    const appointmentTime = document.getElementById('serviceAppointmentTime').value;
-    const serviceLocation = document.getElementById('serviceLocation').value;
-    const notes = document.getElementById('serviceNotes').value.trim();
-    const totalAmountField = document.getElementById('serviceTotalAmount');
-    if (!fullName) { showFormError('serviceFormError', 'Please enter your full name.'); return; }
-    if (!email) { showFormError('serviceFormError', 'Please enter your email address.'); return; }
-    if (!phone) { showFormError('serviceFormError', 'Please enter your phone number.'); return; }
-    if (!serviceSelect.value) { showFormError('serviceFormError', 'Please select a service.'); return; }
-    if (!appointmentDate) { showFormError('serviceFormError', 'Please select your preferred appointment date.'); return; }
-    if (!appointmentTime) { showFormError('serviceFormError', 'Please select your preferred appointment time.'); return; }
-    if (!serviceLocation) { showFormError('serviceFormError', 'Please select a service location.'); return; }
-    let totalAmount = parseFloat(totalAmountField.value) || 0;
-    if (totalAmount <= 0) { showFormError('serviceFormError', 'Please select a valid service.'); return; }
-    const payTypeEl = document.querySelector('input[name="paymentType"]:checked');
-    const paymentType = payTypeEl ? payTypeEl.value : 'full';
-    const amountInKobo = Math.round(totalAmount * 100);
-    const transactionRef = 'COCOGLAMWORLD_' + Math.floor((Math.random() * 1000000000) + 1);
-    sessionStorage.setItem('orderData', JSON.stringify({ customer: fullName, email, phone, service: serviceSelect.value, appointmentDate, appointmentTime, serviceLocation, notes, amount: totalAmount, paymentType, reference: transactionRef, type: 'service' }));
-    const handler = PaystackPop.setup({
-        key: 'pk_test_4786e2462c3ce32ea82d9f007b846ba2a861c602',
-        email, amount: amountInKobo, currency: 'NGN', ref: transactionRef,
-        onClose: function() { console.log('Transaction window closed'); },
-        onSuccess: function(response) {
-            const formspreeEndpoint = 'https://formspree.io/f/xqednlyq';
-            const formData = new FormData();
-            formData.append('name', fullName); formData.append('email', email); formData.append('phone', phone);
-            formData.append('service', serviceSelect.value); formData.append('appointmentDate', appointmentDate); formData.append('appointmentTime', appointmentTime); formData.append('serviceLocation', serviceLocation); formData.append('notes', notes); formData.append('price', totalAmount); formData.append('paymentType', paymentType); formData.append('paymentReference', response.reference);
-            fetch(formspreeEndpoint, { method: 'POST', body: formData, mode: 'no-cors' }).finally(() => { if (serviceOrderForm) serviceOrderForm.reset(); window.location.replace('order-success.html'); });
-        }
-    });
-    handler.openIframe();
 }
 
 // ========================================
