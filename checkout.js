@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (quantityInput) {
+<<<<<<< HEAD
         quantityInput.addEventListener('pointerdown', function (event) {
             if (document.activeElement !== this) {
                 event.preventDefault();
@@ -270,6 +271,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 value = 1;
                 this.value = value;
             }
+=======
+        quantityInput.addEventListener('focus', function () {
+            this.select();
+        });
+        quantityInput.addEventListener('input', function () {
+            let value = parseInt(this.value, 10);
+            if (isNaN(value) || value < 1) {
+                value = 1;
+            }
+            this.value = value;
+>>>>>>> 1bd78f832fbe35008ef19e1069a4e2e4671d8134
             updatePriceDisplay(value);
         });
     }
